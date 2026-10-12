@@ -220,3 +220,15 @@ html { scroll-padding-top: 5.5rem; }
 
 /* Brilho que segue o mouse na chamada final (mesmo efeito do rodapé, mais forte sobre o gradiente) */
 .brilho-mouse { position: absolute; inset: 0; opacity: var(--brilho); transition: opacity 0.5s; mix-blend-mode: screen; background: radial-gradient(circle 26rem at var(--px) var(--py), rgb(233 184 114 / 0.38), rgb(233 184 114 / 0.08) 45%, transparent 70%); }
+
+/* Borda que acende seguindo o mouse (Glowing Effect da Aceternity), cores da marca */
+.borda-acesa { --inicio: 0; --ativo: 0; pointer-events: none; position: absolute; inset: 0; border-radius: inherit; }
+.borda-acesa::after {
+  content: ''; position: absolute; inset: calc(-1 * var(--esp)); border-radius: inherit;
+  border: var(--esp) solid transparent;
+  background: repeating-conic-gradient(from 236.84deg at 50% 50%, #e9b872 0%, #aa3c25 5%, #2f8a74 10%, #e9b872 20%);
+  background-attachment: fixed;
+  opacity: var(--ativo); transition: opacity 0.3s;
+  mask-clip: padding-box, border-box; mask-composite: intersect;
+  mask-image: linear-gradient(#0000, #0000), conic-gradient(from calc((var(--inicio) - var(--abertura)) * 1deg), #0000 0deg, #fff, #0000 calc(var(--abertura) * 2deg));
+}

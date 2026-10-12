@@ -8,6 +8,7 @@ import { CalendarCheck } from '@phosphor-icons/react/dist/csr/CalendarCheck'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Button } from '@/components/ui/button'
 import { Revelar, RevelarGrupo, RevelarItem } from '@/components/ui/revelar'
+import { BordaAcesa } from '@/components/ui/efeitos'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { CIDADE, ENDERECO, HORARIO, INSTAGRAM, instagramUrl, mapaUrl, waGeral } from '@/lib/site'
 
@@ -44,7 +45,8 @@ export function Localizacao() {
           </Revelar>
         </div>
         <Revelar de="direita" className="lg:col-span-6 lg:col-start-7">
-        <RevelarGrupo className="grid gap-5 rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+        <RevelarGrupo className="relative grid gap-5 rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+        <BordaAcesa espessura={2} abertura={50} />
         <dl className="contents">
           {itens.map(({ icon: Icon, rotulo, texto }) => (
             <RevelarItem key={rotulo} className="flex gap-4">

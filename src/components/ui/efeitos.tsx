@@ -6,7 +6,7 @@
 // - confete(): explosão de confete em canvas (Confetti do Magic UI, sem canvas-confetti).
 
 import { AnimatePresence, m, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
-import { type PointerEvent, type ReactNode, useEffect, useState } from 'react'
+import { type PointerEvent, type ReactNode, useEffect, useRef, useState } from 'react'
 
 export function FiltroVidro() {
   useEffect(() => {
@@ -169,4 +169,132 @@ export function CursorEtiqueta() {
       </m.span>
     </m.div>
   )
+}
+
+// Cursor em anel invertido (Custom Cursor do 21st, id 18283 + Inverted Cursor, id 9451): segue com mola,
+// cresce sobre links/botões, na cor de destaque (terracota). Só com mouse.
+export function CursorAnel() {
+  const [habilitado, setHabilitado] = useState(false)
+  const [sobre, setSobre] = useState(false)
+  const [visivel, setVisivel] = useState(false)
+  const x = useMotionValue(-100)
+  const y = useMotionValue(-100)
+  const sx = useSpring(x, { stiffness: 260, damping: 24, mass: 0.6 })
+  const sy = useSpring(y, { stiffness: 260, damping: 24, mass: 0.6 })
+
+  useEffect(() => {
+    const mq = matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)')
+    setHabilitado(mq.matches)
+    if (!mq.matches) return
+    const mover = (e: globalThis.PointerEvent) => {
+      x.set(e.clientX)
+      y.set(e.clientY)
+      setVisivel(true)
+      setSobre(!!(e.target as Element | null)?.closest?.('a, button, [role="tab"], label, summary, input, select'))
+    }
+    const sair = () => setVisivel(false)
+    window.addEventListener('pointermove', mover, { passive: true })
+    document.documentElement.addEventListener('pointerleave', sair)
+    return () => {
+      window.removeEventListener('pointermove', mover)
+      document.documentElement.removeEventListener('pointerleave', sair)
+    }
+  }, [x, y])
+
+  if (!habilitado) return null
+  return (
+    <m.div aria-hidden style={{ x: sx, y: sy }} className="cursor-anel pointer-events-none fixed top-0 left-0 z-[95]">
+      <m.div
+        initial={false}
+        animate={{ width: sobre ? 56 : 28, height: sobre ? 56 : 28, opacity: visivel ? 1 : 0, backgroundColor: sobre ? 'rgba(170,60,37,0.14)' : 'rgba(170,60,37,0)' }}
+        transition={{ duration: 0.35, ease: [0.625, 0.05, 0, 1] }}
+        className="-translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-[#aa3c25] shadow-[0_0_0_1px_rgba(255,250,247,0.35)]"
+      />
+    </m.div>
+  )
+}
+
+// Rastro de fotos que segue o mouse (Cursor Image Trail do 21st, id 18471, unlumen). Só com mouse.
+type ItemRastro = { id: number; x: number; y: number; rot: number; i: number }
+let idRastro = 0
+export function RastroFotos({ fotos, children, className, tamanho = 150 }: { fotos: string[]; children: ReactNode; className?: string; tamanho?: number }) {
+  const [rastro, setRastro] = useState<ItemRastro[]>([])
+  const [habilitado, setHabilitado] = useState(false)
+  const ultimo = useRef<{ x: number; y: number } | null>(null)
+  const cont = useRef(0)
+  useEffect(() => setHabilitado(matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)').matches), [])
+
+  function mover(e: PointerEvent<HTMLDivElement>) {
+    if (!habilitado || e.pointerType !== 'mouse') return
+    const r = e.currentTarget.getBoundingClientRect()
+    const px = e.clientX - r.left
+    const py = e.clientY - r.top
+    if (ultimo.current && Math.hypot(px - ultimo.current.x, py - ultimo.current.y) < 90) return
+    ultimo.current = { x: px, y: py }
+    const novo = { id: ++idRastro, x: px, y: py, rot: (Math.random() * 2 - 1) * 14, i: cont.current++ % fotos.length }
+    setRastro((v) => [...v, novo].slice(-6))
+  }
+
+  return (
+    <div
+      onPointerMove={mover}
+      onPointerLeave={() => {
+        setRastro([])
+        ultimo.current = null
+      }}
+      className={`relative ${className ?? ''}`}
+    >
+      <AnimatePresence>
+        {rastro.map((it, k) => (
+          <m.img
+            key={it.id}
+            src={fotos[it.i]}
+            alt=""
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.5, rotate: it.rot * 1.5 }}
+            animate={{ opacity: 1, scale: 0.65 + 0.35 * ((k + 1) / rastro.length), rotate: it.rot }}
+            exit={{ opacity: 0, scale: 0.3 }}
+            transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+            style={{ left: it.x, top: it.y, width: tamanho, x: '-50%', y: '-50%', zIndex: k }}
+            className="pointer-events-none absolute aspect-[4/5] rounded-xl object-cover shadow-xl select-none"
+          />
+        ))}
+      </AnimatePresence>
+      <div className="relative z-10">{children}</div>
+    </div>
+  )
+}
+
+// Borda que acende seguindo o mouse (Glowing Effect da Aceternity, 21st id 1567), cores da marca,
+// sem o `animate` do Motion (suaviza o ângulo num rAF). Coloque dentro de um elemento `relative` com borda arredondada.
+export function BordaAcesa({ espessura = 2, abertura = 40 }: { espessura?: number; abertura?: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)').matches) return
+    let alvo = 0
+    let atual = 0
+    let raf = 0
+    const passo = () => {
+      atual += (alvo - atual) * 0.12
+      el.style.setProperty('--inicio', String(atual))
+      if (Math.abs(alvo - atual) > 0.1) raf = requestAnimationFrame(passo)
+      else raf = 0
+    }
+    const mover = (e: globalThis.PointerEvent) => {
+      const r = el.getBoundingClientRect()
+      const perto = e.clientX > r.left - 80 && e.clientX < r.right + 80 && e.clientY > r.top - 80 && e.clientY < r.bottom + 80
+      el.style.setProperty('--ativo', perto ? '1' : '0')
+      if (!perto) return
+      const ang = (180 * Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2))) / Math.PI + 90
+      alvo = atual + ((((ang - atual + 180) % 360) + 360) % 360) - 180
+      if (!raf) raf = requestAnimationFrame(passo)
+    }
+    document.body.addEventListener('pointermove', mover, { passive: true })
+    return () => {
+      document.body.removeEventListener('pointermove', mover)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+  return <div ref={ref} aria-hidden className="borda-acesa" style={{ '--esp': `${espessura}px`, '--abertura': abertura } as React.CSSProperties} />
 }

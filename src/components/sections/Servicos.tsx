@@ -1,13 +1,17 @@
 import { AbasCardapio } from '@/components/ui/abas-cardapio'
 import { BentoFestas } from '@/components/ui/bento-festas'
 import { Revelar } from '@/components/ui/revelar'
+import { RastroFotos } from '@/components/ui/efeitos'
+
+const FOTOS_RASTRO = ['/img/casamento.webp', '/img/festa-15-anos.webp', '/img/festa-infantil.webp', '/img/cha-de-bebe.webp', '/img/aniversario-adulto.webp', '/img/galeria-6.webp']
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { cardapios, festas, preco } from '@/lib/site'
 
 export function Festas() {
   return (
     <section id="festas" aria-labelledby="titulo-festas" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
-      <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <RastroFotos fotos={FOTOS_RASTRO} className="-mx-4 mb-6 px-4 py-6 sm:-mx-6 sm:px-6 lg:py-14">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="lg:max-w-3xl lg:flex-1">
           <MaskedTextReveal as="h2" id="titulo-festas" text="Que festa você vai fazer?" className="font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" />
         </div>
@@ -15,6 +19,7 @@ export function Festas() {
           <p className="text-muted-foreground max-w-sm text-lg">Escolha o tipo e abra a conversa já com a mensagem pronta.</p>
         </Revelar>
       </div>
+      </RastroFotos>
       <BentoFestas itens={festas} preco={preco} />
     </section>
   )

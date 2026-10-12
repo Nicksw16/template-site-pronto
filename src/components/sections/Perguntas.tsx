@@ -4,6 +4,7 @@ import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import SingleOpenAccordion from '@/components/ui/single-open-accordion'
 import { Button } from '@/components/ui/button'
 import { Revelar } from '@/components/ui/revelar'
+import { BordaAcesa } from '@/components/ui/efeitos'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { faq, waGeral } from '@/lib/site'
 
@@ -16,7 +17,8 @@ export function Perguntas() {
             <p className="text-accent font-serif text-sm tracking-[0.3em] uppercase">Perguntas frequentes</p>
             <MaskedTextReveal as="h2" id="titulo-perguntas" text="Dúvidas de quem está organizando a festa" className="mt-3 font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl" />
             <Revelar atraso={0.2}>
-              <div className="bg-secondary/70 mt-8 rounded-2xl p-6">
+              <div className="bg-secondary/70 relative mt-8 rounded-2xl p-6">
+                <BordaAcesa />
                 <p className="font-serif text-2xl">Não achou a sua pergunta?</p>
                 <p className="text-muted-foreground mt-2">Mande no WhatsApp. A gente responde com calma, sem compromisso.</p>
                 <Button asChild size="lg" className="brilho-cta mt-5 w-full transition-[background-color,transform] active:scale-[0.97] sm:w-auto">
@@ -30,7 +32,10 @@ export function Perguntas() {
           </div>
         </div>
         <Revelar de="direita" className="lg:col-span-7">
-          <SingleOpenAccordion title="" className="max-w-none" items={faq.map((f) => ({ id: f.id, question: f.q, answer: f.a }))} />
+          <div className="relative rounded-xl">
+            <BordaAcesa espessura={3} abertura={55} />
+            <SingleOpenAccordion title="" className="max-w-none" items={faq.map((f) => ({ id: f.id, question: f.q, answer: f.a }))} />
+          </div>
         </Revelar>
       </div>
     </section>
