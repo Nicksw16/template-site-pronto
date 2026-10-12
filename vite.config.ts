@@ -6,5 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: { alias: { '@': path.resolve(import.meta.dirname, './src') } },
-  build: { outDir: 'dist', assetsInlineLimit: 0 },
+  // Alvo amplo: roda em iPhones com Safari 14+ e Android antigos (antes: só Safari 16.4+).
+  build: { outDir: 'dist', assetsInlineLimit: 0, target: ['es2020', 'safari14', 'chrome87', 'firefox78', 'edge88'] },
 })

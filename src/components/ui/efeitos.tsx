@@ -9,6 +9,9 @@ import { AnimatePresence, m, useMotionValue, useReducedMotion, useSpring } from 
 import { type PointerEvent, type ReactNode, useEffect, useState } from 'react'
 
 export function FiltroVidro() {
+  useEffect(() => {
+    if ('userAgentData' in navigator) document.documentElement.classList.add('refracao')
+  }, [])
   return (
     <svg aria-hidden width="0" height="0" className="absolute">
       <filter id="vidro" x="0%" y="0%" width="100%" height="100%">

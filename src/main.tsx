@@ -4,9 +4,12 @@ import '@fontsource/cormorant-garamond/latin-600.css'
 import '@fontsource-variable/outfit/wght.css'
 import './index.css'
 import App from './App'
+import { ErroSeguro } from './components/ErroSeguro'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ErroSeguro>
+      <App />
+    </ErroSeguro>
   </StrictMode>,
 )

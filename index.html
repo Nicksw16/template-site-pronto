@@ -174,7 +174,14 @@
       <input name="tipo" />
       <input name="cardapio" />
     </form>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Aparece só se o JavaScript não carregar; o React substitui ao montar. -->
+      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:2rem;text-align:center;font-family:Georgia,serif;background:#fbf5f2;color:#2a1f22">
+        <p style="font-size:2rem;margin:0">Villa Aurora</p>
+        <p style="font-family:system-ui,sans-serif;margin:0;color:#6b5a5e">Espaço e buffet em [Cidade - UF]</p>
+        <a href="https://wa.me/55DDDNUMERO?text=Ol%C3%A1!%20Vi%20o%20site%20da%20Villa%20Aurora%20e%20quero%20um%20or%C3%A7amento." style="font-family:system-ui,sans-serif;background:#14584a;color:#fffaf7;padding:.9rem 1.4rem;border-radius:.75rem;text-decoration:none;font-weight:600">Pedir orçamento pelo WhatsApp</a>
+      </div>
+    </div>
     <noscript>
       <p style="padding:1rem;font-family:sans-serif">Villa Aurora Espaço &amp; Buffet em [Cidade - UF]. Peça seu orçamento pelo WhatsApp:
         <a href="https://wa.me/55DDDNUMERO?text=Ol%C3%A1!%20Vi%20o%20site%20da%20Villa%20Aurora%20e%20quero%20um%20or%C3%A7amento.%20Data%3A%20__%20%C2%B7%20Convidados%3A%20__%20%C2%B7%20Tipo%20de%20festa%3A%20__" target="_blank" rel="noopener noreferrer">abrir o WhatsApp</a>.</p>
