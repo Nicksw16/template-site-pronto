@@ -1,4 +1,5 @@
 // Chamada final com gradiente animado em WebGL (mesh gradient do 21st, estilo ShaderGradient) nas cores da marca.
+import type { PointerEvent } from 'react'
 import { CalendarCheck } from '@phosphor-icons/react/dist/csr/CalendarCheck'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Button } from '@/components/ui/button'
@@ -10,12 +11,26 @@ import { Revelar } from '@/components/ui/revelar'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { waGeral, waVisita } from '@/lib/site'
 
+// Brilho dourado que segue o mouse (o mesmo efeito do rodapé). Só com mouse.
+function mover(e: PointerEvent<HTMLElement>) {
+  if (e.pointerType !== 'mouse') return
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--px', `${e.clientX - r.left}px`)
+  e.currentTarget.style.setProperty('--py', `${e.clientY - r.top}px`)
+  e.currentTarget.style.setProperty('--brilho', '1')
+}
+
 export function ChamadaFinal() {
   return (
-    <section aria-labelledby="titulo-chamada" className="relative isolate overflow-hidden bg-[#0f3d34] py-28 text-[#fffaf7] sm:py-40">
+    <section
+      aria-labelledby="titulo-chamada"
+      onPointerMove={mover}
+      onPointerLeave={(e) => e.currentTarget.style.setProperty('--brilho', '0')}
+      className="com-brilho relative isolate overflow-hidden bg-[#0f3d34] py-28 text-[#fffaf7] sm:py-40">
       <div aria-hidden className="absolute inset-0 -z-10">
         <GradienteShader cores={CORES} />
         <div className="absolute inset-0 bg-black/25" />
+        <div className="brilho-mouse" />
       </div>
       <div className="mx-auto flex max-w-3xl flex-col items-center px-4 text-center sm:px-6">
         <MaskedTextReveal

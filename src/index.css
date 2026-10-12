@@ -190,7 +190,7 @@
 html { scroll-padding-top: 5.5rem; }
 
 /* Rodapé com marca gigante e feixe (Light Beam Footer, 21st 35251) */
-.rodape { --px: 50%; --py: 50%; --brilho: 0; }
+.rodape, .com-brilho { --px: 50%; --py: 50%; --brilho: 0; }
 .rodape-feixe { position: absolute; inset: -20%; filter: blur(28px); background: linear-gradient(118deg, transparent 42%, rgb(233 184 114 / 0.10) 48%, rgb(233 184 114 / 0.32) 52%, rgb(233 184 114 / 0.08) 56%, transparent 62%); }
 .rodape-brilho { position: absolute; inset: 0; opacity: var(--brilho); transition: opacity 0.5s; background: radial-gradient(circle 22rem at var(--px) var(--py), rgb(233 184 114 / 0.16), transparent 70%); }
 .rodape-grao { position: absolute; inset: 0; opacity: 0.12; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
@@ -217,3 +217,6 @@ html { scroll-padding-top: 5.5rem; }
   .rodape[data-visto='false'] .rodape-sobe, .rodape[data-visto='false'] .rodape-letra { opacity: 1; translate: none; }
   .rodape[data-visto='false'] .rodape-rotulo::after { transform: none; }
 }
+
+/* Brilho que segue o mouse na chamada final (mesmo efeito do rodapé, mais forte sobre o gradiente) */
+.brilho-mouse { position: absolute; inset: 0; opacity: var(--brilho); transition: opacity 0.5s; mix-blend-mode: screen; background: radial-gradient(circle 26rem at var(--px) var(--py), rgb(233 184 114 / 0.38), rgb(233 184 114 / 0.08) 45%, transparent 70%); }
