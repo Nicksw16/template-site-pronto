@@ -32,3 +32,4 @@ Gerados localmente (sem foto de terceiros além da base do OG): `../favicon.svg`
 1. Coloque as fotos reais numa pasta fora do repositório.
 2. Ajuste a lista `fotos` em `scripts/imagens.mjs` (coluna `de`) e rode `npm run imagens -- <pasta>`.
 3. Atualize os `alt` em `src/lib/site.ts`, `src/components/sections/*.tsx` e apague esta tabela.
+| salao-largo.webp, salao-largo-960.webp | [17023020](https://www.pexels.com/photo/luxury-banquet-hall-with-a-chandelier-decorated-with-pink-cherry-flowers-17023020/) | Matheus Bertelli |

@@ -47,12 +47,14 @@ export default function SingleOpenAccordion({
   return (
     <div className={`text-foreground mx-auto w-full max-w-3xl ${className}`}>
       <div className="bg-card text-card-foreground rounded-xl border p-5 shadow-sm sm:p-8">
-        <header className="mb-4 flex flex-col gap-2">
-          <h2 id={titleId} className="font-serif text-3xl tracking-tight text-balance sm:text-4xl">
-            {title}
-          </h2>
-          {description && <p className="text-muted-foreground leading-relaxed">{description}</p>}
-        </header>
+        {title && (
+          <header className="mb-4 flex flex-col gap-2">
+            <h2 id={titleId} className="font-serif text-3xl tracking-tight text-balance sm:text-4xl">
+              {title}
+            </h2>
+            {description && <p className="text-muted-foreground leading-relaxed">{description}</p>}
+          </header>
+        )}
 
         <div className="divide-border divide-y">
           {items.map((item, index) => {

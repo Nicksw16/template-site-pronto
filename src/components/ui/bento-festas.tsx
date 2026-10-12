@@ -34,6 +34,7 @@ export function BentoFestas({ itens, preco }: { itens: Item[]; preco: string }) 
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Pedir orçamento: ${f.titulo} (abre o WhatsApp)`}
+            data-cursor="Pedir orçamento ↗"
             className="group relative flex h-full flex-col justify-end overflow-hidden rounded-2xl text-[#fffaf7] shadow-sm transition-[box-shadow,transform] duration-500 hover:shadow-2xl active:scale-[0.98] motion-safe:hover:-translate-y-1"
           >
             <img

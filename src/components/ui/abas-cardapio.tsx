@@ -79,7 +79,7 @@ export function AbasCardapio({ itens, preco }: { itens: Item[]; preco: string })
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12"
           >
-            <div className="overflow-hidden rounded-2xl lg:col-span-7">
+            <a href={c.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden data-cursor={`Orçar ${c.titulo} ↗`} className="block overflow-hidden rounded-2xl lg:col-span-7">
               <m.img
                 src={c.img}
                 alt={c.alt}
@@ -92,7 +92,7 @@ export function AbasCardapio({ itens, preco }: { itens: Item[]; preco: string })
                 transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
                 className="aspect-[4/3] w-full object-cover"
               />
-            </div>
+            </a>
             <div className="lg:col-span-5">
               <p className="text-accent font-serif text-sm tracking-[0.3em] uppercase">Cardápio {String(ativo + 1).padStart(2, '0')}</p>
               <h3 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">{c.titulo}</h3>

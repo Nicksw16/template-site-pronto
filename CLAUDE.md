@@ -33,6 +33,9 @@
 - Hero em tela cheia (foto + título grande sobre a imagem); cabeçalho fixo de vidro por cima.
 - Festas em grade bento (bento-festas.tsx); cardápios em abas com direção (abas-cardapio.tsx).
 - Chamada final com gradiente WebGL nas cores da marca (gradiente-shader.tsx, mesh gradient do 21st).
+- Foto que se expande ao rolar (foto-expande.tsx); "O espaço" com foto fixa que troca (Sticky Scroll Reveal).
+- Perguntas em 2 colunas; Como chegar com cartão de vidro sobre foto; rodapé com marca gigante e feixe.
+- Etiqueta que segue o cursor em [data-cursor] (só mouse).
 - Abertura (loader) em CSS no index.html: 1ª visita da sessão, some sozinha (~2 s).
 - Fotos do Sobre com inclinação 3D que endireita ao rolar; convidados com botões −/+.
 - Vídeo opcional no topo: `HERO_VIDEO` em `src/lib/site.ts` (arquivo em `public/video/`).

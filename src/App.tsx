@@ -1,7 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { domAnimation, LazyMotion, MotionConfig } from 'motion/react'
 import { FaixaFestas } from '@/components/ui/faixa-festas'
-import { FiltroVidro } from '@/components/ui/efeitos'
+import { FotoExpande } from '@/components/ui/foto-expande'
+import { CursorEtiqueta, FiltroVidro } from '@/components/ui/efeitos'
 import { ChamadaFinal } from '@/components/sections/ChamadaFinal'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Hero07 } from '@/components/ui/hero-07'
@@ -24,6 +25,7 @@ export default function App() {
     <LazyMotion features={domAnimation}>
     <MotionConfig reducedMotion="user">
       <FiltroVidro />
+      <CursorEtiqueta />
       <a href="#conteudo" className="bg-primary text-primary-foreground sr-only z-50 rounded-xl px-4 py-3 focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
         Pular para o conteúdo
       </a>
@@ -45,6 +47,13 @@ export default function App() {
         </div>
         <FaixaFestas />
         <Festas />
+        <FotoExpande
+          src="/img/salao-largo.webp"
+          srcCelular="/img/salao-largo-960.webp"
+          alt="Salão da Villa Aurora com lustre de flores e buffet montado [foto de exemplo: trocar]"
+          titulo="Um salão. Todas as festas."
+          legenda="Do primeiro aniversário ao casamento, o mesmo cuidado com a mesa, a decoração e os convidados."
+        />
         <Cardapios />
         <Sobre />
         <Suspense fallback={<div className="min-h-[60vh]" aria-hidden />}>

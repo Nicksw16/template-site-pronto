@@ -118,3 +118,55 @@ export function confete(origem?: { x: number; y: number }) {
   }
   requestAnimationFrame(quadro)
 }
+
+// Etiqueta que segue o cursor e "estoura" com mola ao passar em [data-cursor] (Cursor Bubble do 21st, id 31197,
+// refeito com Motion em vez de GSAP). Só com mouse e sem reduced-motion; no toque não existe.
+export function CursorEtiqueta() {
+  const [ativo, setAtivo] = useState(false)
+  const [texto, setTexto] = useState('')
+  const x = useMotionValue(-100)
+  const y = useMotionValue(-100)
+  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.6 })
+  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.6 })
+  const [habilitado, setHabilitado] = useState(false)
+
+  useEffect(() => {
+    const mq = matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)')
+    setHabilitado(mq.matches)
+    if (!mq.matches) return
+    const mover = (e: globalThis.PointerEvent) => {
+      x.set(e.clientX + 14)
+      y.set(e.clientY - 44)
+      const alvo = (e.target as Element | null)?.closest?.('[data-cursor]')
+      if (alvo) {
+        setTexto(alvo.getAttribute('data-cursor') ?? '')
+        setAtivo(true)
+      } else setAtivo(false)
+    }
+    const sair = () => setAtivo(false)
+    window.addEventListener('pointermove', mover, { passive: true })
+    document.documentElement.addEventListener('pointerleave', sair)
+    return () => {
+      window.removeEventListener('pointermove', mover)
+      document.documentElement.removeEventListener('pointerleave', sair)
+    }
+  }, [x, y])
+
+  if (!habilitado) return null
+  return (
+    <m.div
+      aria-hidden
+      style={{ x: sx, y: sy }}
+      className="pointer-events-none fixed top-0 left-0 z-[90]"
+    >
+      <m.span
+        initial={false}
+        animate={ativo ? { scale: 1, rotate: 0, opacity: 1 } : { scale: 0, rotate: -30, opacity: 0 }}
+        transition={ativo ? { type: 'spring', stiffness: 420, damping: 14 } : { duration: 0.2 }}
+        className="block origin-bottom-left rounded-[999px_999px_999px_0] bg-[#14584a] px-3.5 py-2 text-sm font-semibold whitespace-nowrap text-[#fffaf7] shadow-lg"
+      >
+        {texto}
+      </m.span>
+    </m.div>
+  )
+}

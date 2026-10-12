@@ -22,7 +22,7 @@ const fotos = [
 function Cartao({ f, i, progresso }: { f: (typeof fotos)[number]; i: number; progresso: MotionValue<number> }) {
   const x = useTransform(progresso, [0, 1], ['-8%', '8%'])
   return (
-    <figure className="group relative h-[58vh] w-[78vw] shrink-0 overflow-hidden rounded-2xl sm:w-[52vw] lg:h-[64vh] lg:w-[36vw]">
+    <figure data-cursor="Continue rolando ↓" className="group relative h-[58vh] w-[78vw] shrink-0 overflow-hidden rounded-2xl sm:w-[52vw] lg:h-[64vh] lg:w-[36vw]">
       <m.img
         src={f.src}
         alt={f.alt}
