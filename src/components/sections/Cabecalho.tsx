@@ -25,7 +25,7 @@ export function Cabecalho() {
     <m.header
       animate={{ y: oculto ? '-130%' : '0%' }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-2 z-40 px-2 sm:top-3 sm:px-4"
+      className="fixed inset-x-0 top-2 z-40 px-2 sm:top-3 sm:px-4"
     >
       <div className="vidro mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 rounded-2xl border border-white/40 px-3 sm:h-16 sm:px-5">
         <a href="#inicio" className="flex min-h-11 items-center gap-2" aria-label="Villa Aurora, voltar ao início">

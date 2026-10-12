@@ -80,7 +80,7 @@ export function Orcamento() {
     <section id="orcamento" aria-labelledby="titulo-orcamento" className="bg-primary/[0.06] py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5">
-          <MaskedTextReveal as="h2" id="titulo-orcamento" text="Orçamento em 3 passos" className="font-serif text-4xl tracking-tight sm:text-5xl" />
+          <MaskedTextReveal as="h2" id="titulo-orcamento" text="Orçamento em 3 passos" className="font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" />
           <ol ref={lista} className="relative mt-8 grid gap-6">
             <span aria-hidden className="bg-border absolute top-5 bottom-5 left-5 w-px -translate-x-1/2" />
             <m.span aria-hidden style={{ scaleY: linha }} className="bg-primary absolute top-5 bottom-5 left-5 w-0.5 origin-top -translate-x-1/2" />

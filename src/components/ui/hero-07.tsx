@@ -1,7 +1,7 @@
-// Editorial Image Hero (21st.dev id 19077, felipemenezes098) adaptado pela Lynx:
-// - título revelado por linhas (Text Reveal Mask, 21st 19257); resto entra em CSS (.entrada);
-// - foto local com fetchpriority="high", aproximação na chegada, parallax ao rolar e brilhos dourados (canvas);
-// - tokens da paleta e Cormorant Garamond em font-serif.
+// Hero em tela cheia (imersivo). Partiu do Editorial Image Hero (21st 19077) e foi redesenhado pela Lynx
+// com referência ao Responsive Hero Banner (21st 9904): foto/vídeo ocupando a tela, título grande sobre a imagem,
+// vidro no selo e no botão secundário, brilhos dourados, aproximação + parallax e indicador de rolagem.
+// LCP: <img> local com fetchpriority="high". Tudo respeita prefers-reduced-motion.
 
 import { useRef } from 'react'
 import { m, useScroll, useTransform } from 'motion/react'
@@ -43,6 +43,8 @@ function VideoFundo({ src, poster }: { src: string; poster: string }) {
   )
 }
 
+const comIntro = () => typeof document !== 'undefined' && document.documentElement.classList.contains('com-intro')
+
 export function Hero07({
   tagline,
   title,
@@ -57,52 +59,69 @@ export function Hero07({
 }: Readonly<Hero07Props>) {
   const secao = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: secao, offset: ['start start', 'end start'] })
-  const yFoto = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
-  const opFoto = useTransform(scrollYProgress, [0, 0.8], [1, 0.4])
+  const yFoto = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
+  const escala = useTransform(scrollYProgress, [0, 1], [1, 1.12])
+  const yTexto = useTransform(scrollYProgress, [0, 1], ['0%', '-18%'])
+  const opTexto = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+
   return (
-    <section ref={secao} className="bg-background relative isolate w-full overflow-hidden" aria-labelledby="titulo-hero">
-      <m.div style={{ y: yFoto, opacity: opFoto }} className="relative w-full overflow-hidden">
-        <div className="revelar-salao relative overflow-hidden [mask-image:linear-gradient(to_bottom,#000_80%,transparent_98%)]">
-          <img
-            src={landscapeImage}
-            srcSet={landscapeImageMobile ? `${landscapeImageMobile} 800w, ${landscapeImage} 1600w` : undefined}
-            sizes="100vw"
-            alt={landscapeAlt}
-            width={1600}
-            height={800}
-            fetchPriority="high"
-            decoding="async"
-            className="hero-foto aspect-[2/1] w-full object-cover object-center sm:aspect-[9/4] lg:aspect-auto lg:h-[48vh] lg:max-h-[560px] lg:min-h-[340px] dark:brightness-[0.92]"
-          />
-          {landscapeVideo && <VideoFundo src={landscapeVideo} poster={landscapeImage} />}
-          <Brilhos className="pointer-events-none absolute inset-0 size-full mix-blend-screen" />
-        </div>
+    <section ref={secao} aria-labelledby="titulo-hero" className="relative isolate flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-[#1b1417] text-[#fffaf7]">
+      <m.div style={{ y: yFoto, scale: escala }} className="absolute inset-0 -z-10">
+        <img
+          src={landscapeImage}
+          srcSet={landscapeImageMobile ? `${landscapeImageMobile} 800w, ${landscapeImage} 1600w` : undefined}
+          sizes="100vw"
+          alt={landscapeAlt}
+          width={1600}
+          height={800}
+          fetchPriority="high"
+          decoding="async"
+          className="hero-foto size-full object-cover object-center"
+        />
+        {landscapeVideo && <VideoFundo src={landscapeVideo} poster={landscapeImage} />}
+        <Brilhos className="pointer-events-none absolute inset-0 size-full mix-blend-screen" />
+      </m.div>
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-[#120c0e]/90 via-[#120c0e]/45 to-[#120c0e]/25" />
+
+      <m.div style={{ y: yTexto, opacity: opTexto }} className="mx-auto w-full max-w-7xl px-4 pt-32 pb-14 sm:px-6 sm:pb-16 lg:pb-20">
+        <p className="entrada inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-md">
+          <span aria-hidden className="text-[#e9b872]">✦</span>
+          {tagline}
+        </p>
+        <MaskedTextReveal
+          as="h1"
+          id="titulo-hero"
+          text={title}
+          splitBy="lines"
+          delay={comIntro() ? 1.2 : 0.15}
+          viewportMargin="0px"
+          className="mt-6 max-w-5xl font-serif text-5xl leading-[0.98] tracking-tight sm:text-6xl lg:text-7xl"
+        />
+        <p className="entrada entrada-2 mt-5 font-serif text-2xl text-[#e9b872] italic sm:text-3xl">
+          para <TextoGiratorio palavras={['casamentos', '15 anos', 'festas infantis', 'aniversários', 'confraternizações', 'chás de bebê']} />
+        </p>
+        <p className="entrada entrada-2 mt-5 max-w-xl text-base leading-relaxed text-pretty text-[#fffaf7]/85 sm:text-lg">{description}</p>
+        {(primaryCTA?.ctaEnabled || secondaryCTA?.ctaEnabled) && (
+          <div className="entrada entrada-3 mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
+            {primaryCTA?.ctaEnabled && (
+              <Magnetico className="w-full sm:w-auto [&_a]:bg-[#fffaf7] [&_a]:text-[#14584a] [&_a:hover]:bg-white">
+                <Cta cta={primaryCTA} />
+              </Magnetico>
+            )}
+            {secondaryCTA?.ctaEnabled && (
+              <div className="[&_a]:border-white/40 [&_a]:bg-white/10 [&_a]:text-[#fffaf7] [&_a]:backdrop-blur-md [&_a:hover]:bg-white/20 [&_a:hover]:text-white">
+                <Cta cta={{ ...secondaryCTA, variant: secondaryCTA.variant ?? 'outline' }} />
+              </div>
+            )}
+          </div>
+        )}
+        {support && <p className="entrada entrada-3 mt-6 text-sm text-[#fffaf7]/70">{support}</p>}
       </m.div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pt-6 pb-16 sm:px-6 sm:pb-24 lg:grid-cols-12 lg:gap-10 lg:pb-28">
-        <div className="entrada flex lg:col-span-4 lg:col-start-1 lg:mt-5 lg:self-start lg:border-t lg:border-border lg:pt-5">
-          <p className="text-accent max-w-xs text-base font-medium leading-relaxed lg:text-lg">
-            {tagline}
-            <br />
-            <span className="text-foreground/70">para </span>
-            <TextoGiratorio palavras={['casamentos', '15 anos', 'festas infantis', 'aniversários', 'confraternizações', 'chás de bebê']} className="text-primary font-semibold" />
-          </p>
-        </div>
-
-        <div className="flex flex-col items-start gap-5 sm:gap-6 lg:col-span-7 lg:col-start-6">
-          <MaskedTextReveal as="h1" id="titulo-hero" text={title} splitBy="lines" delay={typeof document !== 'undefined' && document.documentElement.classList.contains('com-intro') ? 1.2 : 0.15} viewportMargin="0px" className="text-foreground font-serif text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl" />
-          <p className="entrada entrada-2 text-muted-foreground max-w-xl text-base leading-relaxed text-pretty sm:text-lg">
-            {description}
-          </p>
-          {(primaryCTA?.ctaEnabled || secondaryCTA?.ctaEnabled) && (
-            <div className="entrada entrada-3 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-              {primaryCTA?.ctaEnabled && <Magnetico className="w-full sm:w-auto"><Cta cta={primaryCTA} /></Magnetico>}
-              {secondaryCTA?.ctaEnabled && <Cta cta={{ ...secondaryCTA, variant: secondaryCTA.variant ?? 'outline' }} />}
-            </div>
-          )}
-          {support && <p className="entrada entrada-3 text-muted-foreground text-sm">{support}</p>}
-        </div>
-      </div>
+      <a href="#festas" className="entrada entrada-3 absolute right-6 bottom-8 hidden flex-col items-center gap-3 text-xs tracking-[0.3em] text-[#fffaf7]/75 uppercase lg:flex" aria-label="Rolar para os tipos de festa">
+        <span className="[writing-mode:vertical-rl]">Role</span>
+        <span className="rolar-linha relative h-14 w-px overflow-hidden bg-white/25" />
+      </a>
     </section>
   )
 }

@@ -45,7 +45,7 @@ function Cabecalho() {
   return (
     <div className="mx-auto mb-8 flex max-w-7xl flex-col gap-4 px-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
       <div className="max-w-2xl">
-        <MaskedTextReveal as="h2" id="titulo-galeria" text="O espaço em dia de festa" className="font-serif text-4xl tracking-tight sm:text-5xl" />
+        <MaskedTextReveal as="h2" id="titulo-galeria" text="O espaço em dia de festa" className="font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" />
         <p className="text-muted-foreground mt-3">[Fotos de exemplo: trocar pelas fotos reais autorizadas pelos clientes.]</p>
       </div>
       <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="text-primary inline-flex min-h-11 items-center gap-2 font-semibold underline-offset-4 hover:underline">

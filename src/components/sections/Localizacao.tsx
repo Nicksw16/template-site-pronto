@@ -23,7 +23,7 @@ export function Localizacao() {
     <section id="localizacao" aria-labelledby="titulo-localizacao" className="bg-secondary/60 py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <MaskedTextReveal as="h2" id="titulo-localizacao" text="Como chegar" className="font-serif text-4xl tracking-tight sm:text-5xl" />
+          <MaskedTextReveal as="h2" id="titulo-localizacao" text="Como chegar" className="font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" />
           <p className="text-muted-foreground mt-3 text-lg">Venha conhecer o salão antes de fechar a data.</p>
           <Revelar atraso={0.2} className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">

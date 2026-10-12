@@ -37,17 +37,17 @@ export function TextoGiratorio({ palavras, intervalo = 2400, className }: { pala
   }, [palavras.length, intervalo, reduzir])
 
   return (
-    <span className={`relative inline-flex overflow-hidden align-bottom ${className ?? ''}`}>
+    <span className={`relative inline-block align-bottom [clip-path:inset(0_-0.3em)] ${className ?? ''}`}>
       <span className="sr-only">{palavras.join(', ')}</span>
-      <AnimatePresence mode="popLayout" initial={false}>
+      <AnimatePresence mode="wait" initial={false}>
         <m.span
           key={palavras[i]}
           aria-hidden
-          initial={{ y: '100%', opacity: 0, filter: 'blur(4px)' }}
-          animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
-          exit={{ y: '-100%', opacity: 0, filter: 'blur(4px)' }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-block whitespace-nowrap"
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: '0%', opacity: 1 }}
+          exit={{ y: '-100%', opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-block pr-1 whitespace-nowrap"
         >
           {palavras[i]}
         </m.span>

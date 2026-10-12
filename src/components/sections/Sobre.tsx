@@ -24,7 +24,7 @@ export function Sobre() {
     <section id="espaco" aria-labelledby="titulo-espaco" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5">
-          <MaskedTextReveal as="h2" id="titulo-espaco" text="Um lugar pensado para receber" className="font-serif text-4xl tracking-tight sm:text-5xl" />
+          <MaskedTextReveal as="h2" id="titulo-espaco" text="Um lugar pensado para receber" className="font-serif text-5xl leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl" />
           <Revelar atraso={0.2}>
           <p className="text-muted-foreground mt-5 text-lg leading-relaxed">
             A Villa Aurora reúne o salão, a cozinha e a equipe no mesmo endereço. Você fala com um único lugar sobre data, cardápio e organização, sem juntar fornecedores.

@@ -28,8 +28,11 @@
 - Passos do orçamento com linha que preenche ao rolar; cabeçalho que some ao descer; barra de progresso.
 - Botão fixo do WhatsApp aparece após o topo e pulsa; View Transitions entre páginas.
 - Cabeçalho de vidro flutuante (Liquid Glass, filtro SVG #vidro); palavra que alterna no topo; CTA magnético.
-- Galeria horizontal ligada à rolagem (motion.dev); chamada final com fundo Aurora (Aceternity).
+- Galeria horizontal ligada à rolagem (motion.dev).
 - Formulário: tipos de festa em chips, Border Beam (Magic UI) na borda e confete ao enviar.
+- Hero em tela cheia (foto + título grande sobre a imagem); cabeçalho fixo de vidro por cima.
+- Festas em grade bento (bento-festas.tsx); cardápios em abas com direção (abas-cardapio.tsx).
+- Chamada final com gradiente WebGL nas cores da marca (gradiente-shader.tsx, mesh gradient do 21st).
 - Abertura (loader) em CSS no index.html: 1ª visita da sessão, some sozinha (~2 s).
 - Fotos do Sobre com inclinação 3D que endireita ao rolar; convidados com botões −/+.
 - Vídeo opcional no topo: `HERO_VIDEO` em `src/lib/site.ts` (arquivo em `public/video/`).
