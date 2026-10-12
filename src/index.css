@@ -1,0 +1,105 @@
+@import 'tailwindcss';
+
+@custom-variant dark (@media (prefers-color-scheme: dark));
+
+/* Paleta do plano-design.md (contraste AA calculado) */
+:root {
+  --background: #fbf5f2;
+  --foreground: #2a1e22;
+  --card: #f2e4de;
+  --card-foreground: #2a1e22;
+  --muted: #f2e4de;
+  --muted-foreground: #5e4a50;
+  --primary: #14584a;
+  --primary-foreground: #fffaf7;
+  --secondary: #e9d5cf;
+  --secondary-foreground: #2a1e22;
+  --accent: #aa3c25;
+  --accent-foreground: #fffaf7;
+  --border: #e3cfc8;
+  --input: #d9c1b9;
+  --ring: #14584a;
+  --radius: 12px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1b1417;
+    --foreground: #f4eae6;
+    --card: #2a1f24;
+    --card-foreground: #f4eae6;
+    --muted: #2a1f24;
+    --muted-foreground: #c9b6bc;
+    --primary: #5fc4ae;
+    --primary-foreground: #1b1417;
+    --secondary: #3a2a31;
+    --secondary-foreground: #f4eae6;
+    --accent: #f08a70;
+    --accent-foreground: #1b1417;
+    --border: #3e2f35;
+    --input: #4a3940;
+    --ring: #5fc4ae;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-xl: var(--radius);
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Outfit Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; }
+  body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
+  h1, h2, .font-serif { font-family: var(--font-serif); font-weight: 600; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
+
+/* Entrada do texto do hero: só desktop e sem reduced-motion */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .entrada { animation: subir 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .entrada-2 { animation-delay: 100ms; }
+  .entrada-3 { animation-delay: 200ms; }
+}
+
+/* Efeito "uau" (feito à mão): a foto do salão se abre ao rolar.
+   Sem prender o scroll; sem suporte ou no celular = foto estática. */
+@keyframes abrir-salao {
+  from { clip-path: inset(0 5% 0 5% round 12px); transform: scale(1); }
+  to { clip-path: inset(0 0 0 0 round 0); transform: scale(1.04); }
+}
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    .revelar-salao {
+      animation: abrir-salao linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 420px;
+    }
+  }
+}
