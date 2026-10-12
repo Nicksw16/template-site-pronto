@@ -3,7 +3,7 @@
 - **Cliente:** modelo de nicho (espaço de eventos + buffet), nome fictício
 - **Modo:** demonstração para prospecção — trocar tudo entre [colchetes]
 - **Objetivo:** orçamento/visita pelo WhatsApp (55DDDNUMERO)
-- **Stack:** Vite 8 + React 19 + TypeScript + Tailwind v4 (@tailwindcss/vite) + shadcn (components.json, `src/components/ui/`) · motion e embla só em chunks lazy · ícones Phosphor · fontes auto-hospedadas (@fontsource) · build `npm run build` → `dist/`
+- **Stack:** Vite 8 + React 19 + TypeScript + Tailwind v4 (@tailwindcss/vite) + shadcn (components.json, `src/components/ui/`) · motion (LazyMotion/domAnimation) no pacote principal, embla em chunk lazy · ícones Phosphor · fontes auto-hospedadas (@fontsource) · build `npm run build` → `dist/`
 - **Deploy:** Netlify (netlify.toml)
 - **Status:** pronto para publicar (modelo de nicho; trocar espaços reservados e fotos — ver `public/img/CREDITOS.md`)
 
@@ -27,3 +27,7 @@
 - Cards com entrada em cascata e inclinação 3D só com mouse; fotos do "Sobre" reveladas por máscara.
 - Passos do orçamento com linha que preenche ao rolar; cabeçalho que some ao descer; barra de progresso.
 - Botão fixo do WhatsApp aparece após o topo e pulsa; View Transitions entre páginas.
+- Cabeçalho de vidro flutuante (Liquid Glass, filtro SVG #vidro); palavra que alterna no topo; CTA magnético.
+- Galeria horizontal ligada à rolagem (motion.dev); chamada final com fundo Aurora (Aceternity).
+- Formulário: tipos de festa em chips, Border Beam (Magic UI) na borda e confete ao enviar.
+- Efeitos reaproveitáveis em `src/components/ui/efeitos.tsx` e `revelar.tsx`.

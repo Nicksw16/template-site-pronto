@@ -8,6 +8,7 @@ import { m, useScroll, useTransform } from 'motion/react'
 import { Cta, type CtaProps } from '@/components/ui/hero-07-utils/cta'
 import { Brilhos } from '@/components/ui/brilhos'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
+import { Magnetico, TextoGiratorio } from '@/components/ui/efeitos'
 
 export interface Hero07Props {
   tagline: string
@@ -57,7 +58,12 @@ export function Hero07({
 
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pt-6 pb-16 sm:px-6 sm:pb-24 lg:grid-cols-12 lg:gap-10 lg:pb-28">
         <div className="entrada flex lg:col-span-4 lg:col-start-1 lg:mt-5 lg:self-start lg:border-t lg:border-border lg:pt-5">
-          <p className="text-accent max-w-xs text-base font-medium leading-relaxed lg:text-lg">{tagline}</p>
+          <p className="text-accent max-w-xs text-base font-medium leading-relaxed lg:text-lg">
+            {tagline}
+            <br />
+            <span className="text-foreground/70">para </span>
+            <TextoGiratorio palavras={['casamentos', '15 anos', 'festas infantis', 'aniversários', 'confraternizações', 'chás de bebê']} className="text-primary font-semibold" />
+          </p>
         </div>
 
         <div className="flex flex-col items-start gap-5 sm:gap-6 lg:col-span-7 lg:col-start-6">
@@ -67,7 +73,7 @@ export function Hero07({
           </p>
           {(primaryCTA?.ctaEnabled || secondaryCTA?.ctaEnabled) && (
             <div className="entrada entrada-3 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-              {primaryCTA?.ctaEnabled && <Cta cta={primaryCTA} />}
+              {primaryCTA?.ctaEnabled && <Magnetico className="w-full sm:w-auto"><Cta cta={primaryCTA} /></Magnetico>}
               {secondaryCTA?.ctaEnabled && <Cta cta={{ ...secondaryCTA, variant: secondaryCTA.variant ?? 'outline' }} />}
             </div>
           )}

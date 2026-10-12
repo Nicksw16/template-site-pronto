@@ -23,11 +23,11 @@ export function Cabecalho() {
   return (
     <>
     <m.header
-      animate={{ y: oculto ? '-100%' : '0%' }}
+      animate={{ y: oculto ? '-130%' : '0%' }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-background/90 supports-[backdrop-filter]:bg-background/75 sticky top-0 z-40 border-b backdrop-blur-md"
+      className="sticky top-2 z-40 px-2 sm:top-3 sm:px-4"
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="vidro mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 rounded-2xl border border-white/40 px-3 sm:h-16 sm:px-5">
         <a href="#inicio" className="flex min-h-11 items-center gap-2" aria-label="Villa Aurora, voltar ao início">
           <img src="/favicon.svg" alt="" width={32} height={32} className="size-8" />
           <span className="font-serif text-2xl leading-none font-semibold">Villa Aurora</span>

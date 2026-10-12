@@ -6,6 +6,7 @@ import { m, useScroll, useTransform } from 'motion/react'
 import { CheckCircle } from '@phosphor-icons/react/dist/csr/CheckCircle'
 import { Button } from '@/components/ui/button'
 import { Revelar } from '@/components/ui/revelar'
+import { BordaFeixe, confete } from '@/components/ui/efeitos'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { cardapios, festas, HORARIO, waLink } from '@/lib/site'
 
@@ -17,6 +18,9 @@ const passos = [
 
 const campo =
   'border-input bg-background text-foreground placeholder:text-muted-foreground focus-visible:ring-ring min-h-12 w-full rounded-xl border px-4 text-base focus-visible:ring-2 focus-visible:outline-none'
+
+const chip =
+  'border-input bg-background text-foreground has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary has-[:focus-visible]:ring-ring inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm font-medium transition-[background-color,color,border-color,transform] duration-200 select-none has-[:focus-visible]:ring-2 active:scale-95 has-[:checked]:shadow-md motion-safe:has-[:checked]:scale-[1.04]'
 
 function dataBr(iso: string) {
   const [a, m, d] = iso.split('-')
@@ -41,6 +45,8 @@ export function Orcamento() {
     }
     setErro('')
     setEnviado(true)
+    const btn = form.querySelector('button[type=submit]')?.getBoundingClientRect()
+    confete(btn ? { x: btn.left + btn.width / 2, y: btn.top } : undefined)
     const msg =
       `Olá! Vi o site da Villa Aurora e quero um orçamento. Data: ${dataBr(dados.data)} · Convidados: ${dados.convidados} · Tipo de festa: ${dados.tipo}` +
       (dados.cardapio ? ` · Cardápio: ${dados.cardapio}` : '') +
@@ -58,7 +64,10 @@ export function Orcamento() {
     })
       .catch(() => undefined)
       .finally(() => {
-        window.location.href = '/obrigado.html'
+        // tempo para o confete aparecer antes de ir para a página de obrigado
+        setTimeout(() => {
+          window.location.href = '/obrigado.html'
+        }, 1200)
       })
   }
 
@@ -106,9 +115,10 @@ export function Orcamento() {
           netlify-honeypot="bot-field"
           onSubmit={enviar}
           noValidate
-          className="bg-background grid gap-4 rounded-xl border p-5 shadow-sm transition-shadow duration-300 focus-within:shadow-lg sm:grid-cols-2 sm:p-8"
+          className="bg-background relative grid gap-4 rounded-xl border p-5 shadow-sm transition-shadow duration-300 focus-within:shadow-lg sm:grid-cols-2 sm:p-8"
           aria-describedby="aviso-lgpd"
         >
+          <BordaFeixe tamanho={180} />
           <input type="hidden" name="form-name" value="orcamento" />
           <p className="hidden">
             <label>
@@ -127,25 +137,28 @@ export function Orcamento() {
             <span className="text-sm font-medium">Número de convidados</span>
             <input name="convidados" type="number" inputMode="numeric" min={1} max={2000} required className={campo} placeholder="Ex.: 80" />
           </label>
-          <label className="grid gap-2">
-            <span className="text-sm font-medium">Tipo de festa</span>
-            <select name="tipo" required defaultValue="" className={campo}>
-              <option value="" disabled>Escolha</option>
-              {festas.map((f) => (
-                <option key={f.titulo}>{f.titulo}</option>
+          <fieldset className="grid gap-2 sm:col-span-2">
+            <legend className="mb-2 text-sm font-medium">Tipo de festa</legend>
+            <div className="flex flex-wrap gap-2">
+              {[...festas.map((f) => f.titulo), 'Outro'].map((t) => (
+                <label key={t} className={chip}>
+                  <input type="radio" name="tipo" value={t} required className="sr-only" />
+                  {t}
+                </label>
               ))}
-              <option>Outro</option>
-            </select>
-          </label>
-          <label className="grid gap-2">
-            <span className="text-sm font-medium">Cardápio (opcional)</span>
-            <select name="cardapio" defaultValue="" className={campo}>
-              <option value="">Ainda não sei</option>
-              {cardapios.map((c) => (
-                <option key={c.titulo}>{c.titulo}</option>
+            </div>
+          </fieldset>
+          <fieldset className="grid gap-2 sm:col-span-2">
+            <legend className="mb-2 text-sm font-medium">Cardápio (opcional)</legend>
+            <div className="flex flex-wrap gap-2">
+              {['Ainda não sei', ...cardapios.map((c) => c.titulo)].map((t, i) => (
+                <label key={t} className={chip}>
+                  <input type="radio" name="cardapio" value={i === 0 ? '' : t} defaultChecked={i === 0} className="sr-only" />
+                  {t}
+                </label>
               ))}
-            </select>
-          </label>
+            </div>
+          </fieldset>
           {erro && (
             <m.p key={erro + Date.now()} role="alert" initial={{ x: 0 }} animate={{ x: [0, -8, 8, -5, 5, 0] }} transition={{ duration: 0.4 }} className="text-accent text-sm font-medium sm:col-span-2">{erro}</m.p>
           )}
