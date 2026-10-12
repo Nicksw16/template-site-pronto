@@ -1,22 +1,25 @@
 import { lazy, Suspense } from 'react'
 import { domAnimation, LazyMotion, MotionConfig } from 'motion/react'
 import { FaixaFestas } from '@/components/ui/faixa-festas'
-import { FotoExpande } from '@/components/ui/foto-expande'
 import { CursorAnel, CursorEtiqueta, FiltroVidro } from '@/components/ui/efeitos'
-import { ChamadaFinal } from '@/components/sections/ChamadaFinal'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Hero07 } from '@/components/ui/hero-07'
 import { Cabecalho } from '@/components/sections/Cabecalho'
-import { Cardapios, Festas } from '@/components/sections/Servicos'
-import { Sobre } from '@/components/sections/Sobre'
-import { Orcamento } from '@/components/sections/Orcamento'
-import { Perguntas } from '@/components/sections/Perguntas'
-import { Localizacao } from '@/components/sections/Localizacao'
-import { Rodape } from '@/components/sections/Rodape'
 import { WhatsAppFlutuante } from '@/components/sections/WhatsAppFlutuante'
 import { CIDADE, depoimentos, HERO_VIDEO, HORARIO, waGeral } from '@/lib/site'
 
 // Pesados (motion / embla) fora do pacote principal
+import { Festas } from '@/components/sections/Servicos'
+
+// Abaixo da dobra: carregado em partes para o celular não travar no início (menos Total Blocking Time).
+const FotoExpande = lazy(() => import('@/components/ui/foto-expande').then((m) => ({ default: m.FotoExpande })))
+const Cardapios = lazy(() => import('@/components/sections/Servicos').then((m) => ({ default: m.Cardapios })))
+const Sobre = lazy(() => import('@/components/sections/Sobre').then((m) => ({ default: m.Sobre })))
+const Orcamento = lazy(() => import('@/components/sections/Orcamento').then((m) => ({ default: m.Orcamento })))
+const Perguntas = lazy(() => import('@/components/sections/Perguntas').then((m) => ({ default: m.Perguntas })))
+const ChamadaFinal = lazy(() => import('@/components/sections/ChamadaFinal').then((m) => ({ default: m.ChamadaFinal })))
+const Localizacao = lazy(() => import('@/components/sections/Localizacao').then((m) => ({ default: m.Localizacao })))
+const Rodape = lazy(() => import('@/components/sections/Rodape').then((m) => ({ default: m.Rodape })))
 const Galeria = lazy(() => import('@/components/sections/Galeria'))
 const Depoimentos = lazy(() => import('@/components/sections/Depoimentos'))
 
@@ -48,6 +51,7 @@ export default function App() {
         </div>
         <FaixaFestas />
         <Festas />
+        <Suspense fallback={<div className="min-h-screen" aria-hidden />}>
         <FotoExpande
           src="/img/salao-largo.webp"
           srcCelular="/img/salao-largo-960.webp"
@@ -57,16 +61,17 @@ export default function App() {
         />
         <Cardapios />
         <Sobre />
-        <Suspense fallback={<div className="min-h-[60vh]" aria-hidden />}>
           <Galeria />
           {depoimentos.length > 0 && <Depoimentos />}
-        </Suspense>
         <Orcamento />
         <Perguntas />
         <ChamadaFinal />
         <Localizacao />
+        </Suspense>
       </main>
-      <Rodape />
+      <Suspense fallback={null}>
+        <Rodape />
+      </Suspense>
       <WhatsAppFlutuante />
     </MotionConfig>
     </LazyMotion>

@@ -1,5 +1,5 @@
 // Feito à mão: 3 passos + formulário curto que monta a mensagem do WhatsApp.
-// Também registra o pedido no Netlify Forms (form "orcamento"; cópia oculta no index.html).
+// Se FORM_NETLIFY = true (site na Netlify), também registra o pedido no Netlify Forms (form "orcamento"; cópia oculta no index.html).
 import * as React from 'react'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { m, useScroll, useTransform } from 'motion/react'
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Revelar } from '@/components/ui/revelar'
 import { BordaFeixe, confete } from '@/components/ui/efeitos'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
-import { cardapios, festas, HORARIO, waLink } from '@/lib/site'
+import { cardapios, festas, FORM_NETLIFY, HORARIO, waLink } from '@/lib/site'
 
 const passos = [
   { titulo: 'Mande três informações.', texto: 'Data da festa, número de convidados e tipo de festa. A mensagem já vem pronta no botão.' },
@@ -60,20 +60,20 @@ export function Orcamento() {
     // Abre o WhatsApp primeiro (no mesmo clique, para o navegador não bloquear)
     window.open(waLink(msg), '_blank', 'noopener,noreferrer')
 
-    // Registra no Netlify Forms sem travar a conversa; depois vai para a página de obrigado
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ 'form-name': 'orcamento', ...dados }).toString(),
-      keepalive: true,
-    })
-      .catch(() => undefined)
-      .finally(() => {
-        // tempo para o confete aparecer antes de ir para a página de obrigado
-        setTimeout(() => {
-          window.location.href = '/obrigado.html'
-        }, 1200)
+    // Tempo para o confete aparecer antes de ir para a página de obrigado
+    const irParaObrigado = () => setTimeout(() => (window.location.href = '/obrigado.html'), 1200)
+
+    // Netlify Forms só existe hospedando na Netlify (FORM_NETLIFY em site.ts). No Cloudflare fica desligado.
+    if (FORM_NETLIFY) {
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ 'form-name': 'orcamento', ...dados }).toString(),
+        keepalive: true,
       })
+        .catch(() => undefined)
+        .finally(irParaObrigado)
+    } else irParaObrigado()
   }
 
   return (

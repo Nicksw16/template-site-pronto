@@ -49,22 +49,22 @@ export function Localizacao() {
         <BordaAcesa espessura={2} abertura={50} />
         <dl className="contents">
           {itens.map(({ icon: Icon, rotulo, texto }) => (
-            <RevelarItem key={rotulo} className="flex gap-4">
-              <Icon aria-hidden className="mt-0.5 size-6 shrink-0 text-[#e9b872]" />
-              <div>
-                <dt className="text-sm font-semibold">{rotulo}</dt>
-                <dd className="text-[#fffaf7]/80">{texto}</dd>
-              </div>
+            <RevelarItem key={rotulo}>
+              <dt className="flex items-center gap-3 text-sm font-semibold">
+                <Icon aria-hidden className="size-6 shrink-0 text-[#e9b872]" />
+                {rotulo}
+              </dt>
+              <dd className="pl-9 text-[#fffaf7]/80">{texto}</dd>
             </RevelarItem>
           ))}
-          <RevelarItem className="flex gap-4">
-            <InstagramLogo aria-hidden className="mt-0.5 size-6 shrink-0 text-[#e9b872]" />
-            <div>
-              <dt className="text-sm font-semibold">Instagram</dt>
-              <dd>
-                <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-[#e9b872] underline-offset-4 hover:underline">@{INSTAGRAM}</a>
-              </dd>
-            </div>
+          <RevelarItem>
+            <dt className="flex items-center gap-3 text-sm font-semibold">
+              <InstagramLogo aria-hidden className="size-6 shrink-0 text-[#e9b872]" />
+              Instagram
+            </dt>
+            <dd className="pl-9">
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-[#e9b872] underline-offset-4 hover:underline">@{INSTAGRAM}</a>
+            </dd>
           </RevelarItem>
         </dl>
         </RevelarGrupo>

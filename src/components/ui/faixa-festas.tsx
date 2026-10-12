@@ -2,7 +2,7 @@
 // Inspirada no Infinite Text Marquee (21st id 1944) e no "Ticker: Scroll" do motion.dev; refeita leve.
 // prefers-reduced-motion: faixa parada.
 
-import { m, useAnimationFrame, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from 'motion/react'
+import { m, useAnimationFrame, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from 'motion/react'
 import { useRef } from 'react'
 
 const wrap = (min: number, max: number, v: number) => {
@@ -27,6 +27,8 @@ function Copia() {
 
 function Trilho({ base = 1.2, reverso = false }: { base?: number; reverso?: boolean }) {
   const reduzir = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+  const naTela = useInView(ref)
   const x = useMotionValue(0)
   const { scrollY } = useScroll()
   const vel = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 })
@@ -36,7 +38,7 @@ function Trilho({ base = 1.2, reverso = false }: { base?: number; reverso?: bool
   const skew = useTransform(vel, [-2000, 0, 2000], [-6, 0, 6])
 
   useAnimationFrame((_, delta) => {
-    if (reduzir) return
+    if (reduzir || !naTela) return
     const f = fator.get()
     if (f < 0) dir.current = reverso ? 1 : -1
     else if (f > 0) dir.current = reverso ? -1 : 1
@@ -44,7 +46,7 @@ function Trilho({ base = 1.2, reverso = false }: { base?: number; reverso?: bool
   })
 
   return (
-    <m.div className="flex w-max will-change-transform" style={{ x: pos, skewX: skew }}>
+    <m.div ref={ref} className="flex w-max will-change-transform" style={{ x: pos, skewX: skew }}>
       <Copia />
       <Copia />
       <Copia />

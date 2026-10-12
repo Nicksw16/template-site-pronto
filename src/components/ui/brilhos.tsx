@@ -10,7 +10,8 @@ export function Brilhos({ className }: { className?: string }) {
 
   useEffect(() => {
     const cv = ref.current
-    if (!cv || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    // No celular fica desligado (economiza CPU no carregamento); só com mouse e sem reduced-motion.
+    if (!cv || !matchMedia('(pointer: fine) and (min-width: 768px) and (prefers-reduced-motion: no-preference)').matches) return
     const ctx = cv.getContext('2d')
     if (!ctx) return
     const dpr = Math.min(window.devicePixelRatio || 1, 2)

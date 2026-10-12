@@ -3,8 +3,8 @@
 - **Cliente:** modelo de nicho (espaço de eventos + buffet), nome fictício
 - **Modo:** demonstração para prospecção — trocar tudo entre [colchetes]
 - **Objetivo:** orçamento/visita pelo WhatsApp (55DDDNUMERO)
-- **Stack:** Vite 8 + React 19 + TypeScript + Tailwind v4 (@tailwindcss/vite) + shadcn (components.json, `src/components/ui/`) · motion (LazyMotion/domAnimation) no pacote principal, embla em chunk lazy · ícones Phosphor · fontes auto-hospedadas (@fontsource) · build `npm run build` → `dist/`
-- **Deploy:** Netlify (netlify.toml)
+- **Stack:** Vite 8 + React 19 + TypeScript + Tailwind v4 (@tailwindcss/vite) + shadcn (components.json, `src/components/ui/`) · motion (LazyMotion/domAnimation) no pacote principal; seções abaixo da dobra em React.lazy · ícones Phosphor · fontes auto-hospedadas (@fontsource) · build `npm run build` → `dist/`
+- **Deploy:** Cloudflare Workers (upload do dist/). `FORM_NETLIFY=false` em site.ts; netlify.toml mantido caso vá para a Netlify
 - **Status:** pronto para publicar (modelo de nicho; trocar espaços reservados e fotos — ver `public/img/CREDITOS.md`)
 
 ## Arquivos de trabalho

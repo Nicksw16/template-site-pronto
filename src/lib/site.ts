@@ -1,5 +1,8 @@
 // Dados do site. Tudo entre [colchetes] é espaço reservado: trocar pelos dados reais.
 export const WA = '55DDDNUMERO' // 55 + DDD + número, só dígitos
+// Formulário: true só se o site estiver na Netlify (registra o pedido no Netlify Forms). No Cloudflare, deixe false.
+export const FORM_NETLIFY = false
+
 // Vídeo do topo (opcional). Ex.: '/video/hero.mp4' (MP4 H.264, mudo, 6–10 s, ≤ 3 MB). Vazio = só a foto.
 export const HERO_VIDEO = ''
 export const INSTAGRAM = '[instagram]'
