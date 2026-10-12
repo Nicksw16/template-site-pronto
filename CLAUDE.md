@@ -20,3 +20,10 @@
 - `index.html`: title, description, OG, canonical e JSON-LD ([dominio], [Cidade-UF]).
 - `public/`: _headers (CSP), robots.txt, sitemap.xml, politica-de-privacidade.html, obrigado.html.
 - Fotos: `npm run imagens -- <pasta>` (scripts/imagens.mjs) gera WebP, og-image, favicon e apple-touch-icon.
+
+## Animações (Motion + CSS, todas respeitam prefers-reduced-motion)
+- Hero: título revelado por linhas, foto com aproximação + parallax, brilhos dourados (canvas leve).
+- Faixa cinética dos tipos de festa (reage à velocidade da rolagem), títulos revelados por palavra.
+- Cards com entrada em cascata e inclinação 3D só com mouse; fotos do "Sobre" reveladas por máscara.
+- Passos do orçamento com linha que preenche ao rolar; cabeçalho que some ao descer; barra de progresso.
+- Botão fixo do WhatsApp aparece após o topo e pulsa; View Transitions entre páginas.

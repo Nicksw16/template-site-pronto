@@ -7,6 +7,8 @@ import { MapTrifold } from '@phosphor-icons/react/dist/csr/MapTrifold'
 import { CalendarCheck } from '@phosphor-icons/react/dist/csr/CalendarCheck'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Button } from '@/components/ui/button'
+import { Revelar, RevelarGrupo, RevelarItem } from '@/components/ui/revelar'
+import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { CIDADE, ENDERECO, HORARIO, INSTAGRAM, instagramUrl, mapaUrl, waGeral } from '@/lib/site'
 
 export function Localizacao() {
@@ -21,9 +23,9 @@ export function Localizacao() {
     <section id="localizacao" aria-labelledby="titulo-localizacao" className="bg-secondary/60 py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <h2 id="titulo-localizacao" className="font-serif text-4xl tracking-tight sm:text-5xl">Como chegar</h2>
+          <MaskedTextReveal as="h2" id="titulo-localizacao" text="Como chegar" className="font-serif text-4xl tracking-tight sm:text-5xl" />
           <p className="text-muted-foreground mt-3 text-lg">Venha conhecer o salão antes de fechar a data.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Revelar atraso={0.2} className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
               <a href={waGeral} target="_blank" rel="noopener noreferrer">
                 <WhatsappLogo aria-hidden className="size-5" />
@@ -36,19 +38,21 @@ export function Localizacao() {
                 Abrir no mapa
               </a>
             </Button>
-          </div>
+          </Revelar>
         </div>
-        <dl className="bg-background grid gap-5 rounded-xl border p-6 sm:p-8 lg:col-span-6 lg:col-start-7">
+        <Revelar de="direita" className="lg:col-span-6 lg:col-start-7">
+        <RevelarGrupo className="bg-background grid gap-5 rounded-xl border p-6 sm:p-8">
+        <dl className="contents">
           {itens.map(({ icon: Icon, rotulo, texto }) => (
-            <div key={rotulo} className="flex gap-4">
+            <RevelarItem key={rotulo} className="flex gap-4">
               <Icon aria-hidden className="text-primary mt-0.5 size-6 shrink-0" />
               <div>
                 <dt className="text-sm font-semibold">{rotulo}</dt>
                 <dd className="text-muted-foreground">{texto}</dd>
               </div>
-            </div>
+            </RevelarItem>
           ))}
-          <div className="flex gap-4">
+          <RevelarItem className="flex gap-4">
             <InstagramLogo aria-hidden className="text-primary mt-0.5 size-6 shrink-0" />
             <div>
               <dt className="text-sm font-semibold">Instagram</dt>
@@ -56,8 +60,10 @@ export function Localizacao() {
                 <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="text-primary inline-flex min-h-11 items-center underline-offset-4 hover:underline">@{INSTAGRAM}</a>
               </dd>
             </div>
-          </div>
+          </RevelarItem>
         </dl>
+        </RevelarGrupo>
+        </Revelar>
       </div>
     </section>
   )

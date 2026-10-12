@@ -13,7 +13,7 @@ export interface CtaProps {
 export function Cta({ cta }: Readonly<{ cta: CtaProps }>) {
   const externo = cta.link.startsWith('http')
   return (
-    <Button asChild variant={cta.variant ?? 'default'} size="lg" className="w-full sm:w-auto">
+    <Button asChild variant={cta.variant ?? 'default'} size="lg" className={cta.variant && cta.variant !== 'default' ? 'w-full sm:w-auto' : 'brilho-cta w-full sm:w-auto'}>
       <a
         href={cta.link}
         {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}

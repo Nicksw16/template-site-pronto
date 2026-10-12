@@ -9,7 +9,7 @@ import { ArrowRight } from '@phosphor-icons/react/dist/csr/ArrowRight'
 import { cn } from '@/lib/utils'
 
 const cardVariants = cva(
-  'group relative flex w-full flex-col overflow-hidden rounded-xl shadow-sm transition-shadow duration-300 ease-out motion-safe:hover:shadow-lg',
+  'group relative flex w-full flex-col overflow-hidden rounded-xl shadow-sm transition-[box-shadow,transform] duration-300 ease-out motion-safe:hover:shadow-xl motion-safe:active:scale-[0.98]',
   {
     variants: {
       variant: {
@@ -44,7 +44,7 @@ const ServiceCard = React.forwardRef<HTMLElement, ServiceCardProps>(
           height={600}
           loading="lazy"
           decoding="async"
-          className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.04]"
+          className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.08]"
         />
       </div>
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">

@@ -1,4 +1,6 @@
 import { lazy, Suspense } from 'react'
+import { domAnimation, LazyMotion, MotionConfig } from 'motion/react'
+import { FaixaFestas } from '@/components/ui/faixa-festas'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Hero07 } from '@/components/ui/hero-07'
 import { Cabecalho } from '@/components/sections/Cabecalho'
@@ -17,7 +19,8 @@ const Depoimentos = lazy(() => import('@/components/sections/Depoimentos'))
 
 export default function App() {
   return (
-    <>
+    <LazyMotion features={domAnimation}>
+    <MotionConfig reducedMotion="user">
       <a href="#conteudo" className="bg-primary text-primary-foreground sr-only z-50 rounded-xl px-4 py-3 focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
         Pular para o conteúdo
       </a>
@@ -36,6 +39,7 @@ export default function App() {
             secondaryCTA={{ ctaEnabled: true, text: 'Ver tipos de festa', link: '#festas', variant: 'outline' }}
           />
         </div>
+        <FaixaFestas />
         <Festas />
         <Cardapios />
         <Sobre />
@@ -49,6 +53,7 @@ export default function App() {
       </main>
       <Rodape />
       <WhatsAppFlutuante />
-    </>
+    </MotionConfig>
+    </LazyMotion>
   )
 }

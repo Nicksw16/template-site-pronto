@@ -2,7 +2,11 @@
 // Também registra o pedido no Netlify Forms (form "orcamento"; cópia oculta no index.html).
 import * as React from 'react'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
+import { m, useScroll, useTransform } from 'motion/react'
+import { CheckCircle } from '@phosphor-icons/react/dist/csr/CheckCircle'
 import { Button } from '@/components/ui/button'
+import { Revelar } from '@/components/ui/revelar'
+import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { cardapios, festas, HORARIO, waLink } from '@/lib/site'
 
 const passos = [
@@ -21,6 +25,10 @@ function dataBr(iso: string) {
 
 export function Orcamento() {
   const [erro, setErro] = React.useState('')
+  const [enviado, setEnviado] = React.useState(false)
+  const lista = React.useRef<HTMLOListElement>(null)
+  const { scrollYProgress } = useScroll({ target: lista, offset: ['start 75%', 'end 45%'] })
+  const linha = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   function enviar(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -32,6 +40,7 @@ export function Orcamento() {
       return
     }
     setErro('')
+    setEnviado(true)
     const msg =
       `Olá! Vi o site da Villa Aurora e quero um orçamento. Data: ${dataBr(dados.data)} · Convidados: ${dados.convidados} · Tipo de festa: ${dados.tipo}` +
       (dados.cardapio ? ` · Cardápio: ${dados.cardapio}` : '') +
@@ -57,21 +66,39 @@ export function Orcamento() {
     <section id="orcamento" aria-labelledby="titulo-orcamento" className="bg-primary/[0.06] py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5">
-          <h2 id="titulo-orcamento" className="font-serif text-4xl tracking-tight sm:text-5xl">Orçamento em 3 passos</h2>
-          <ol className="mt-8 grid gap-6">
+          <MaskedTextReveal as="h2" id="titulo-orcamento" text="Orçamento em 3 passos" className="font-serif text-4xl tracking-tight sm:text-5xl" />
+          <ol ref={lista} className="relative mt-8 grid gap-6">
+            <span aria-hidden className="bg-border absolute top-5 bottom-5 left-5 w-px -translate-x-1/2" />
+            <m.span aria-hidden style={{ scaleY: linha }} className="bg-primary absolute top-5 bottom-5 left-5 w-0.5 origin-top -translate-x-1/2" />
             {passos.map((p, i) => (
-              <li key={p.titulo} className="flex gap-4">
-                <span className="bg-primary text-primary-foreground flex size-10 shrink-0 items-center justify-center rounded-full font-semibold">{i + 1}</span>
+              <m.li
+                key={p.titulo}
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '0px 0px -20% 0px' }}
+                transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                className="relative flex gap-4"
+              >
+                <m.span
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true, margin: '0px 0px -20% 0px' }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 16, delay: 0.1 + i * 0.15 }}
+                  className="bg-primary text-primary-foreground ring-background flex size-10 shrink-0 items-center justify-center rounded-full font-semibold ring-4"
+                >
+                  {i + 1}
+                </m.span>
                 <p className="leading-relaxed">
                   <strong className="font-semibold">{p.titulo}</strong>{' '}
                   <span className="text-muted-foreground">{p.texto}</span>
                 </p>
-              </li>
+              </m.li>
             ))}
           </ol>
           <p className="text-muted-foreground mt-8 text-sm">Atendimento {HORARIO}. Sem compromisso: você só decide depois de ver a proposta.</p>
         </div>
 
+        <Revelar de="direita" className="lg:col-span-7">
         <form
           name="orcamento"
           method="POST"
@@ -79,7 +106,7 @@ export function Orcamento() {
           netlify-honeypot="bot-field"
           onSubmit={enviar}
           noValidate
-          className="bg-background grid gap-4 rounded-xl border p-5 shadow-sm sm:grid-cols-2 sm:p-8 lg:col-span-7"
+          className="bg-background grid gap-4 rounded-xl border p-5 shadow-sm transition-shadow duration-300 focus-within:shadow-lg sm:grid-cols-2 sm:p-8"
           aria-describedby="aviso-lgpd"
         >
           <input type="hidden" name="form-name" value="orcamento" />
@@ -120,17 +147,27 @@ export function Orcamento() {
             </select>
           </label>
           {erro && (
-            <p role="alert" className="text-accent text-sm font-medium sm:col-span-2">{erro}</p>
+            <m.p key={erro + Date.now()} role="alert" initial={{ x: 0 }} animate={{ x: [0, -8, 8, -5, 5, 0] }} transition={{ duration: 0.4 }} className="text-accent text-sm font-medium sm:col-span-2">{erro}</m.p>
           )}
-          <Button type="submit" size="lg" className="w-full sm:col-span-2">
-            <WhatsappLogo aria-hidden className="size-5" />
-            Pedir orçamento pelo WhatsApp
+          <Button type="submit" size="lg" className="brilho-cta w-full transition-[background-color,transform] active:scale-[0.98] sm:col-span-2" aria-live="polite">
+            {enviado ? (
+              <m.span initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2">
+                <CheckCircle aria-hidden weight="fill" className="size-5" />
+                Abrindo o WhatsApp…
+              </m.span>
+            ) : (
+              <>
+                <WhatsappLogo aria-hidden className="size-5" />
+                Pedir orçamento pelo WhatsApp
+              </>
+            )}
           </Button>
           <p id="aviso-lgpd" className="text-muted-foreground text-xs leading-relaxed sm:col-span-2">
             Ao falar conosco pelo WhatsApp você concorda com o uso dos seus dados para o orçamento. Veja a{' '}
             <a href="/politica-de-privacidade.html" className="text-primary underline underline-offset-2">Política de Privacidade</a>.
           </p>
         </form>
+        </Revelar>
       </div>
     </section>
   )

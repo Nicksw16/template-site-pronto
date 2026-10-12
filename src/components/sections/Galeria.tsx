@@ -1,6 +1,7 @@
 // Carregado com React.lazy (motion fica fora do pacote principal).
 import { InstagramLogo } from '@phosphor-icons/react/dist/csr/InstagramLogo'
 import MasonryLightbox, { type ImageType } from '@/components/ui/masonry-lightbox'
+import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { INSTAGRAM, instagramUrl } from '@/lib/site'
 
 // Fotos de exemplo (Pexels): trocar pelas fotos reais autorizadas. Ver public/img/CREDITOS.md.
@@ -20,7 +21,7 @@ export default function Galeria() {
     <section id="galeria" aria-labelledby="titulo-galeria" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="max-w-2xl">
-          <h2 id="titulo-galeria" className="font-serif text-4xl tracking-tight text-balance sm:text-5xl">O espaço em dia de festa</h2>
+          <MaskedTextReveal as="h2" id="titulo-galeria" text="O espaço em dia de festa" className="font-serif text-4xl tracking-tight sm:text-5xl" />
           <p className="text-muted-foreground mt-3">Toque numa foto para ampliar. [Fotos de exemplo: trocar pelas fotos reais autorizadas pelos clientes.]</p>
         </div>
         <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="text-primary inline-flex min-h-11 items-center gap-2 font-semibold underline-offset-4 hover:underline">
