@@ -36,7 +36,7 @@ export function Cabecalho() {
           <ul className="flex items-center gap-1">
             {links.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="text-muted-foreground hover:text-foreground inline-flex min-h-11 items-center px-3 text-[0.95rem] transition-colors">
+                <a href={l.href} className="text-muted-foreground hover:text-foreground after:bg-accent relative inline-flex min-h-11 items-center px-3 text-[0.95rem] transition-colors after:absolute after:inset-x-3 after:bottom-2 after:h-px after:origin-right after:scale-x-0 after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100">
                   {l.label}
                 </a>
               </li>

@@ -30,4 +30,7 @@
 - Cabeçalho de vidro flutuante (Liquid Glass, filtro SVG #vidro); palavra que alterna no topo; CTA magnético.
 - Galeria horizontal ligada à rolagem (motion.dev); chamada final com fundo Aurora (Aceternity).
 - Formulário: tipos de festa em chips, Border Beam (Magic UI) na borda e confete ao enviar.
+- Abertura (loader) em CSS no index.html: 1ª visita da sessão, some sozinha (~2 s).
+- Fotos do Sobre com inclinação 3D que endireita ao rolar; convidados com botões −/+.
+- Vídeo opcional no topo: `HERO_VIDEO` em `src/lib/site.ts` (arquivo em `public/video/`).
 - Efeitos reaproveitáveis em `src/components/ui/efeitos.tsx` e `revelar.tsx`.

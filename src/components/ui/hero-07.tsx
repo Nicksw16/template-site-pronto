@@ -18,8 +18,29 @@ export interface Hero07Props {
   landscapeImage: string
   landscapeImageMobile?: string
   landscapeAlt?: string
+  landscapeVideo?: string
   primaryCTA?: CtaProps
   secondaryCTA?: CtaProps
+}
+
+// Vídeo por cima da foto: só toca sem reduced-motion e sem economia de dados; aparece quando puder tocar.
+function VideoFundo({ src, poster }: { src: string; poster: string }) {
+  const conexao = typeof navigator !== 'undefined' ? (navigator as Navigator & { connection?: { saveData?: boolean } }).connection : undefined
+  if (typeof window !== 'undefined' && (matchMedia('(prefers-reduced-motion: reduce)').matches || conexao?.saveData)) return null
+  return (
+    <video
+      src={src}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-hidden
+      onCanPlay={(e) => e.currentTarget.classList.replace('opacity-0', 'opacity-100')}
+      className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-700"
+    />
+  )
 }
 
 export function Hero07({
@@ -30,6 +51,7 @@ export function Hero07({
   landscapeImage,
   landscapeImageMobile,
   landscapeAlt = '',
+  landscapeVideo,
   primaryCTA,
   secondaryCTA,
 }: Readonly<Hero07Props>) {
@@ -52,6 +74,7 @@ export function Hero07({
             decoding="async"
             className="hero-foto aspect-[2/1] w-full object-cover object-center sm:aspect-[9/4] lg:aspect-auto lg:h-[48vh] lg:max-h-[560px] lg:min-h-[340px] dark:brightness-[0.92]"
           />
+          {landscapeVideo && <VideoFundo src={landscapeVideo} poster={landscapeImage} />}
           <Brilhos className="pointer-events-none absolute inset-0 size-full mix-blend-screen" />
         </div>
       </m.div>
@@ -67,7 +90,7 @@ export function Hero07({
         </div>
 
         <div className="flex flex-col items-start gap-5 sm:gap-6 lg:col-span-7 lg:col-start-6">
-          <MaskedTextReveal as="h1" id="titulo-hero" text={title} splitBy="lines" delay={0.15} viewportMargin="0px" className="text-foreground font-serif text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl" />
+          <MaskedTextReveal as="h1" id="titulo-hero" text={title} splitBy="lines" delay={typeof document !== 'undefined' && document.documentElement.classList.contains('com-intro') ? 1.2 : 0.15} viewportMargin="0px" className="text-foreground font-serif text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl" />
           <p className="entrada entrada-2 text-muted-foreground max-w-xl text-base leading-relaxed text-pretty sm:text-lg">
             {description}
           </p>

@@ -13,7 +13,7 @@ import { Perguntas } from '@/components/sections/Perguntas'
 import { Localizacao } from '@/components/sections/Localizacao'
 import { Rodape } from '@/components/sections/Rodape'
 import { WhatsAppFlutuante } from '@/components/sections/WhatsAppFlutuante'
-import { CIDADE, depoimentos, HORARIO, waGeral } from '@/lib/site'
+import { CIDADE, depoimentos, HERO_VIDEO, HORARIO, waGeral } from '@/lib/site'
 
 // Pesados (motion / embla) fora do pacote principal
 const Galeria = lazy(() => import('@/components/sections/Galeria'))
@@ -37,6 +37,7 @@ export default function App() {
             support={`Atendimento ${HORARIO} · Visitas com agendamento`}
             landscapeImage="/img/hero-salao.webp"
             landscapeImageMobile="/img/hero-salao-800.webp"
+            landscapeVideo={HERO_VIDEO || undefined}
             landscapeAlt="Salão da Villa Aurora decorado e iluminado para uma festa [foto de exemplo: trocar]"
             primaryCTA={{ ctaEnabled: true, text: 'Pedir orçamento pelo WhatsApp', link: waGeral, icon: <WhatsappLogo aria-hidden className="size-5" /> }}
             secondaryCTA={{ ctaEnabled: true, text: 'Ver tipos de festa', link: '#festas', variant: 'outline' }}

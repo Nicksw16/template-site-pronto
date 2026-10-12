@@ -1,8 +1,9 @@
 // Entradas ao rolar (Motion). Leves: só opacity/transform, uma vez por elemento.
 // MotionConfig reducedMotion="user" (App) desliga o deslocamento com prefers-reduced-motion.
 
+import { useRef } from 'react'
 import type * as React from 'react'
-import { m, type HTMLMotionProps, type Variants } from 'motion/react'
+import { m, useScroll, useTransform, type HTMLMotionProps, type Variants } from 'motion/react'
 import { cn } from '@/lib/utils'
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -71,5 +72,21 @@ export function FotoRevelada({ className, atraso = 0, ...img }: React.ImgHTMLAtt
         {...(img as HTMLMotionProps<'img'>)}
       />
     </m.div>
+  )
+}
+
+// Inclinação 3D que se endireita ao rolar (Container Scroll Animation da Aceternity, refeita leve).
+export function Rotacao3D({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center center'] })
+  const rotateX = useTransform(scrollYProgress, [0, 1], [24, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1])
+  const y = useTransform(scrollYProgress, [0, 1], [60, 0])
+  return (
+    <div ref={ref} className={className} style={{ perspective: 1200 }}>
+      <m.div style={{ rotateX, scale, y, transformOrigin: 'center top' }} className="h-full">
+        {children}
+      </m.div>
+    </div>
   )
 }

@@ -6,7 +6,7 @@ import { UsersThree } from '@phosphor-icons/react/dist/csr/UsersThree'
 import { Wheelchair } from '@phosphor-icons/react/dist/csr/Wheelchair'
 import { CalendarCheck } from '@phosphor-icons/react/dist/csr/CalendarCheck'
 import { Button } from '@/components/ui/button'
-import { FotoRevelada, Revelar, RevelarLi, RevelarLista } from '@/components/ui/revelar'
+import { FotoRevelada, Revelar, Rotacao3D, RevelarLi, RevelarLista } from '@/components/ui/revelar'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { waVisita } from '@/lib/site'
 
@@ -51,12 +51,14 @@ export function Sobre() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-7">
+        <Rotacao3D className="lg:col-span-7">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <FotoRevelada src="/img/salao.webp" alt="Salão climatizado da Villa Aurora com mesas montadas [foto de exemplo: trocar]" width={900} height={1200} className="row-span-2" />
           <FotoRevelada src="/img/area-kids.webp" alt="Brinquedoteca da Villa Aurora com espaço para as crianças [foto de exemplo: trocar]" width={900} height={675} className="aspect-[4/3]" atraso={0.15} />
           <FotoRevelada src="/img/cozinha.webp" alt="Cozinha própria onde o buffet da Villa Aurora é preparado [foto de exemplo: trocar]" width={900} height={675} className="aspect-[4/3]" atraso={0.3} />
           <FotoRevelada src="/img/equipe.webp" alt="Equipe de cozinha da Villa Aurora finalizando os pratos [foto de exemplo: trocar]" width={900} height={675} className="col-span-2 aspect-[16/7]" atraso={0.2} />
         </div>
+        </Rotacao3D>
       </div>
     </section>
   )

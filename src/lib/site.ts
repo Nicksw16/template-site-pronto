@@ -1,5 +1,7 @@
 // Dados do site. Tudo entre [colchetes] é espaço reservado: trocar pelos dados reais.
 export const WA = '55DDDNUMERO' // 55 + DDD + número, só dígitos
+// Vídeo do topo (opcional). Ex.: '/video/hero.mp4' (MP4 H.264, mudo, 6–10 s, ≤ 3 MB). Vazio = só a foto.
+export const HERO_VIDEO = ''
 export const INSTAGRAM = '[instagram]'
 export const CIDADE = '[Cidade - UF]'
 export const ENDERECO = '[Rua, nº, Bairro, Cidade - UF, CEP]'

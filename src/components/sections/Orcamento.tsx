@@ -19,6 +19,9 @@ const passos = [
 const campo =
   'border-input bg-background text-foreground placeholder:text-muted-foreground focus-visible:ring-ring min-h-12 w-full rounded-xl border px-4 text-base focus-visible:ring-2 focus-visible:outline-none'
 
+const passo =
+  'border-input bg-background text-primary hover:bg-secondary flex size-12 shrink-0 items-center justify-center rounded-xl border text-xl font-semibold transition-[background-color,transform] active:scale-90'
+
 const chip =
   'border-input bg-background text-foreground has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:checked]:border-primary has-[:focus-visible]:ring-ring inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm font-medium transition-[background-color,color,border-color,transform] duration-200 select-none has-[:focus-visible]:ring-2 active:scale-95 has-[:checked]:shadow-md motion-safe:has-[:checked]:scale-[1.04]'
 
@@ -30,6 +33,8 @@ function dataBr(iso: string) {
 export function Orcamento() {
   const [erro, setErro] = React.useState('')
   const [enviado, setEnviado] = React.useState(false)
+  const [convidados, setConvidados] = React.useState('')
+  const mudar = (d: number) => setConvidados((v) => String(Math.min(2000, Math.max(10, (Number(v) || (d > 0 ? 40 : 60)) + d))))
   const lista = React.useRef<HTMLOListElement>(null)
   const { scrollYProgress } = useScroll({ target: lista, offset: ['start 75%', 'end 45%'] })
   const linha = useTransform(scrollYProgress, [0, 1], [0, 1])
@@ -135,7 +140,11 @@ export function Orcamento() {
           </label>
           <label className="grid gap-2">
             <span className="text-sm font-medium">Número de convidados</span>
-            <input name="convidados" type="number" inputMode="numeric" min={1} max={2000} required className={campo} placeholder="Ex.: 80" />
+            <div className="flex items-center gap-2">
+              <button type="button" aria-label="Menos 10 convidados" onClick={() => mudar(-10)} className={passo}>−</button>
+              <input name="convidados" type="number" inputMode="numeric" min={1} max={2000} required value={convidados} onChange={(e) => setConvidados(e.target.value)} className={`${campo} text-center tabular-nums`} placeholder="Ex.: 80" />
+              <button type="button" aria-label="Mais 10 convidados" onClick={() => mudar(10)} className={passo}>+</button>
+            </div>
           </label>
           <fieldset className="grid gap-2 sm:col-span-2">
             <legend className="mb-2 text-sm font-medium">Tipo de festa</legend>
