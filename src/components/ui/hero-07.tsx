@@ -86,7 +86,7 @@ export function Hero07({
       <m.div style={{ y: yTexto, opacity: opTexto }} className="mx-auto w-full max-w-7xl px-4 pt-32 pb-14 sm:px-6 sm:pb-16 lg:pb-20">
         <p className="entrada inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-md">
           <span aria-hidden className="text-[#e9b872]">✦</span>
-          {tagline}
+          <span className="texto-brilho texto-brilho-lento">{tagline}</span>
         </p>
         <MaskedTextReveal
           as="h1"

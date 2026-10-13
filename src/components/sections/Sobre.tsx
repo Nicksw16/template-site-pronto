@@ -1,11 +1,13 @@
 // "O espaço" como Sticky Scroll Reveal (Aceternity, 21st id 952), adaptado à rolagem da página:
-// no desktop a foto fica fixa ao lado e troca conforme o item ativo; no celular cada item mostra a sua foto.
+// no desktop a foto fica fixa ao lado e troca conforme o item ativo, dissolvendo em ruído (FotoMorph, 21st 27258);
+// no celular cada item mostra a sua foto.
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, m } from 'motion/react'
+import { m } from 'motion/react'
 import { CalendarCheck } from '@phosphor-icons/react/dist/csr/CalendarCheck'
 import { Car } from '@phosphor-icons/react/dist/csr/Car'
 import { Wheelchair } from '@phosphor-icons/react/dist/csr/Wheelchair'
 import { Button } from '@/components/ui/button'
+import { FotoMorph } from '@/components/ui/foto-morph'
 import { Revelar } from '@/components/ui/revelar'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
 import { waVisita } from '@/lib/site'
@@ -103,20 +105,7 @@ export function Sobre() {
 
         <div className="hidden lg:col-span-7 lg:block">
           <div className="sticky top-24 h-[72vh] overflow-hidden rounded-3xl shadow-2xl">
-            <AnimatePresence initial={false}>
-              <m.img
-                key={itens[ativo].img}
-                src={itens[ativo].img}
-                alt={itens[ativo].alt}
-                width={900}
-                height={1200}
-                initial={{ opacity: 0, scale: 1.12, clipPath: 'inset(0 0 100% 0)' }}
-                animate={{ opacity: 1, scale: 1, clipPath: 'inset(0 0 0% 0)' }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 size-full object-cover"
-              />
-            </AnimatePresence>
+            <FotoMorph itens={itens.map((it) => ({ src: it.img, alt: it.alt }))} ativo={ativo} className="absolute inset-0" />
             <div aria-hidden className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/60 to-transparent p-6 text-[#fffaf7]">
               <span className="font-serif text-3xl">{itens[ativo].titulo}</span>
               <span className="text-sm tabular-nums opacity-80">

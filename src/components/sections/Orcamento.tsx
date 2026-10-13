@@ -5,6 +5,7 @@ import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { m, useScroll, useTransform } from 'motion/react'
 import { CheckCircle } from '@phosphor-icons/react/dist/csr/CheckCircle'
 import { Button } from '@/components/ui/button'
+import { Deslizante } from '@/components/ui/deslizante'
 import { Revelar } from '@/components/ui/revelar'
 import { BordaFeixe, confete } from '@/components/ui/efeitos'
 import { MaskedTextReveal } from '@/components/ui/text-reveal-mask'
@@ -138,14 +139,24 @@ export function Orcamento() {
             <span className="text-sm font-medium">Data da festa</span>
             <input name="data" type="date" required className={campo} />
           </label>
-          <label className="grid gap-2">
-            <span className="text-sm font-medium">Número de convidados</span>
+          <div className="grid gap-2">
+            <label htmlFor="campo-convidados" className="text-sm font-medium">Número de convidados</label>
             <div className="flex items-center gap-2">
               <button type="button" aria-label="Menos 10 convidados" onClick={() => mudar(-10)} className={passo}>−</button>
-              <input name="convidados" type="number" inputMode="numeric" min={1} max={2000} required value={convidados} onChange={(e) => setConvidados(e.target.value)} className={`${campo} text-center tabular-nums`} placeholder="Ex.: 80" />
+              <input id="campo-convidados" name="convidados" type="number" inputMode="numeric" min={1} max={2000} required value={convidados} onChange={(e) => setConvidados(e.target.value)} className={`${campo} text-center tabular-nums`} placeholder="Ex.: 80" />
               <button type="button" aria-label="Mais 10 convidados" onClick={() => mudar(10)} className={passo}>+</button>
             </div>
-          </label>
+            <Deslizante
+              valor={Number(convidados) || 0}
+              aoMudar={(v) => setConvidados(String(v))}
+              min={10}
+              max={400}
+              passo={10}
+              marcas={5}
+              rotulo="Arraste para escolher o número de convidados"
+              texto={convidados ? `${convidados} convidados` : 'Nenhum valor'}
+            />
+          </div>
           <fieldset className="grid gap-2 sm:col-span-2">
             <legend className="mb-2 text-sm font-medium">Tipo de festa</legend>
             <div className="flex flex-wrap gap-2">
@@ -175,7 +186,7 @@ export function Orcamento() {
             {enviado ? (
               <m.span initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2">
                 <CheckCircle aria-hidden weight="fill" className="size-5" />
-                Abrindo o WhatsApp…
+                <span className="texto-brilho">Abrindo o WhatsApp…</span>
               </m.span>
             ) : (
               <>

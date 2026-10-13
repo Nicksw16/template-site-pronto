@@ -207,14 +207,8 @@ html { scroll-padding-top: 5.5rem; }
 .rodape-link:hover > svg { opacity: 1; translate: 4px 0; }
 .rodape-sobe { transition: opacity 0.9s ease var(--d, 0ms), translate 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) var(--d, 0ms); }
 .rodape[data-visto='false'] .rodape-sobe { opacity: 0; translate: 0 16px; }
-.rodape-marca { font-size: clamp(4.5rem, 19vw, 19rem); letter-spacing: -0.03em; margin-bottom: -0.12em; }
-.rodape-letra { display: inline-block; cursor: default; color: transparent; background: linear-gradient(180deg, #2f8a74 10%, #0b2e27 85%); -webkit-background-clip: text; background-clip: text; transition: translate 1.2s cubic-bezier(0.16, 0.84, 0.2, 1) calc(250ms + var(--i) * 70ms), filter 0.4s; }
-.rodape[data-visto='false'] .rodape-letra { translate: 0 80%; }
-.rodape-letra:hover { filter: brightness(1.5) saturate(1.2); }
-@keyframes pular { 0% { transform: none; } 20% { transform: translateY(0.02em) scale(1.06, 0.9); } 45% { transform: translateY(-0.14em) scale(0.97, 1.05); } 70% { transform: translateY(0.01em); } 100% { transform: none; } }
-.rodape-letra.pulou { animation: pular 0.75s cubic-bezier(0.2, 0.8, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) {
-  .rodape[data-visto='false'] .rodape-sobe, .rodape[data-visto='false'] .rodape-letra { opacity: 1; translate: none; }
+  .rodape[data-visto='false'] .rodape-sobe { opacity: 1; translate: none; }
   .rodape[data-visto='false'] .rodape-rotulo::after { transform: none; }
 }
 
@@ -232,3 +226,19 @@ html { scroll-padding-top: 5.5rem; }
   mask-clip: padding-box, border-box; mask-composite: intersect;
   mask-image: linear-gradient(#0000, #0000), conic-gradient(from calc((var(--inicio) - var(--abertura)) * 1deg), #0000 0deg, #fff, #0000 calc(var(--abertura) * 2deg));
 }
+
+/* Texto com brilho que passa (Text Shimmer, 21st 1169) — em CSS puro */
+.texto-brilho { --base: rgb(255 250 247 / 0.72); --luz: #fff; color: var(--base); }
+@media (prefers-reduced-motion: no-preference) {
+  .texto-brilho {
+    color: transparent;
+    background-image: linear-gradient(90deg, #0000 40%, var(--luz) 50%, #0000 60%), linear-gradient(var(--base), var(--base));
+    background-size: 250% 100%, auto;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: texto-brilho 1.4s linear infinite;
+  }
+  .texto-brilho-lento { --base: #fffaf7; --luz: #e9b872; animation-duration: 4.5s; }
+}
+@keyframes texto-brilho { from { background-position: 100% center, 0 0; } to { background-position: 0% center, 0 0; } }

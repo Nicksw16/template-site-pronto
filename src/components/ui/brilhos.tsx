@@ -69,7 +69,8 @@ export function Brilhos({ className }: { className?: string }) {
     ajustar()
     const ro = new ResizeObserver(ajustar)
     ro.observe(cv)
-    const io = new IntersectionObserver(([e]) => {
+    const io = new IntersectionObserver((lista) => {
+      const e = lista[lista.length - 1]
       visivel = e.isIntersecting
       iniciar()
     })

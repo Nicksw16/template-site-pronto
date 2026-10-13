@@ -1,10 +1,12 @@
 // Rodapé com marca gigante e feixe de luz — "Light Beam Footer with Giant Wordmark" (21st id 35251, kedhareswer),
-// refeito enxuto pela Lynx: verde da marca, feixe dourado em CSS que deriva sozinho, brilho que segue o mouse,
-// letras de "Villa Aurora" sobem ao aparecer e pulam no clique. Sem dependências; reduced-motion = parado.
+// refeito enxuto pela Lynx: verde da marca, feixe dourado em CSS que deriva sozinho, brilho que segue o mouse.
+// "Villa Aurora" impresso em pontos (Halftone Wordmark, 21st 37628): os pontos fogem do mouse e o clique solta uma onda.
+// Sem dependências; reduced-motion = parado.
 import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import { ArrowUpRight } from '@phosphor-icons/react/dist/csr/ArrowUpRight'
 import { InstagramLogo } from '@phosphor-icons/react/dist/csr/InstagramLogo'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
+import { MarcaPontilhada } from '@/components/ui/marca-pontilhada'
 import { CNPJ, EMAIL, ENDERECO, HORARIO, INSTAGRAM, instagramUrl, TELEFONE_VISIVEL, waGeral } from '@/lib/site'
 
 const navegue = [
@@ -24,7 +26,7 @@ export function Rodape() {
   useEffect(() => {
     const el = raiz.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setVisto(true), { threshold: 0.15 })
+    const io = new IntersectionObserver((lista) => lista.some((e) => e.isIntersecting) && setVisto(true), { threshold: 0.15 })
     io.observe(el)
     return () => io.disconnect()
   }, [])
@@ -114,20 +116,8 @@ export function Rodape() {
         </p>
       </div>
 
-      <div className="relative mt-6 overflow-hidden" aria-hidden>
-        <p className="rodape-marca px-2 text-center font-serif leading-[0.8] whitespace-nowrap select-none">
-          {Array.from(MARCA).map((ch, i) => (
-            <span key={i} className="rodape-letra" style={{ '--i': i } as React.CSSProperties} onClick={(e) => {
-              const el = e.currentTarget
-              el.classList.remove('pulou')
-              void el.offsetWidth
-              el.classList.add('pulou')
-            }}>
-              {ch === ' ' ? ' ' : ch}
-            </span>
-          ))}
-        </p>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0b2e27] to-transparent" />
+      <div className="relative mt-2" aria-hidden>
+        <MarcaPontilhada palavra={MARCA} className="h-[clamp(120px,21vw,330px)] w-full touch-pan-y" />
       </div>
     </footer>
   )

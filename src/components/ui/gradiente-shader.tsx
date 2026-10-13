@@ -84,7 +84,8 @@ export function GradienteShader({ cores, velocidade = 0.45, className }: { cores
     const pedir = () => {
       if (!raf && naTela && !document.hidden) raf = requestAnimationFrame(quadro)
     }
-    const io = new IntersectionObserver(([e]) => {
+    const io = new IntersectionObserver((lista) => {
+      const e = lista[lista.length - 1]
       naTela = e.isIntersecting
       if (naTela) pedir()
     })

@@ -20,6 +20,7 @@ const Perguntas = lazy(() => import('@/components/sections/Perguntas').then((m) 
 const ChamadaFinal = lazy(() => import('@/components/sections/ChamadaFinal').then((m) => ({ default: m.ChamadaFinal })))
 const Localizacao = lazy(() => import('@/components/sections/Localizacao').then((m) => ({ default: m.Localizacao })))
 const Rodape = lazy(() => import('@/components/sections/Rodape').then((m) => ({ default: m.Rodape })))
+const Entardecer = lazy(() => import('@/components/sections/Entardecer').then((m) => ({ default: m.Entardecer })))
 const Galeria = lazy(() => import('@/components/sections/Galeria'))
 const Depoimentos = lazy(() => import('@/components/sections/Depoimentos'))
 
@@ -63,6 +64,7 @@ export default function App() {
         <Sobre />
           <Galeria />
           {depoimentos.length > 0 && <Depoimentos />}
+        <Entardecer />
         <Orcamento />
         <Perguntas />
         <ChamadaFinal />
