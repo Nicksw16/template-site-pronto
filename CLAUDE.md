@@ -35,7 +35,7 @@
 - Chamada final com gradiente WebGL nas cores da marca (gradiente-shader.tsx, mesh gradient do 21st).
 - Foto que se expande ao rolar (foto-expande.tsx); "O espaço" com foto fixa que troca (Sticky Scroll Reveal).
 - Perguntas em 2 colunas; Como chegar com cartão de vidro sobre foto; rodapé com marca gigante e feixe.
-- Cursor (só mouse): etiqueta em [data-cursor], anel terracota, rastro de fotos no título das festas, borda que acende (BordaAcesa).
+- Cursor (só mouse): etiqueta em [data-cursor] (sem bolinha seguindo o mouse; CursorAnel continua em efeitos.tsx, fora de uso), rastro de fotos no título das festas, borda que acende (BordaAcesa).
 - Favoritos do 21st: foto de "O espaço" que se dissolve em ruído (foto-morph.tsx), revoada que forma "Aurora" (revoada.tsx, seção Entardecer), "Villa Aurora" em pontos no rodapé (marca-pontilhada.tsx), convidados com controle deslizante (deslizante.tsx), texto com brilho (.texto-brilho).
 - Abertura (loader) em CSS no index.html: 1ª visita da sessão, some sozinha (~2 s).
 - Fotos do Sobre com inclinação 3D que endireita ao rolar; convidados com botões −/+.

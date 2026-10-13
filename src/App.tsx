@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { domAnimation, LazyMotion, MotionConfig } from 'motion/react'
 import { FaixaFestas } from '@/components/ui/faixa-festas'
-import { CursorAnel, CursorEtiqueta, FiltroVidro } from '@/components/ui/efeitos'
+import { CursorEtiqueta, FiltroVidro } from '@/components/ui/efeitos'
 import { WhatsappLogo } from '@phosphor-icons/react/dist/csr/WhatsappLogo'
 import { Hero07 } from '@/components/ui/hero-07'
 import { Cabecalho } from '@/components/sections/Cabecalho'
@@ -30,7 +30,6 @@ export default function App() {
     <MotionConfig reducedMotion="user">
       <FiltroVidro />
       <CursorEtiqueta />
-      <CursorAnel />
       <a href="#conteudo" className="bg-primary text-primary-foreground sr-only z-50 rounded-xl px-4 py-3 focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
         Pular para o conteúdo
       </a>
